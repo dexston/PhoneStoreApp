@@ -16,7 +16,12 @@ struct K {
     }
     
     struct Values {
-        static let CornerRadius: CGFloat = 15
+        static let cornerRadius: CGFloat = 15
+    }
+    
+    enum Tabs {
+        case explorer
+        case cart
     }
     
 }

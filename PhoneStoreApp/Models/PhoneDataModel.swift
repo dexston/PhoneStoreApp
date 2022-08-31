@@ -17,3 +17,20 @@ struct Phone: Decodable {
     let picture: URL?
     
 }
+
+struct PhoneDetails: Decodable {
+    
+    let id: String
+    let title: String
+    let CPU: String
+    let camera: String
+    let capacity: [String]
+    let color: [String]
+    let images: [String]
+    let isFavorites: Bool
+    let price: Int
+    let rating: Double
+    let sd: String
+    let ssd: String
+    
+}

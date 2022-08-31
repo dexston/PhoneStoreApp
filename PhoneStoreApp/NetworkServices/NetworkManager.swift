@@ -27,16 +27,32 @@ class NetworkManager {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
-            //print(url)
             let (data,_) = try await URLSession.shared.data(from: url)
-            
-                let decodedData = try decoder.decode(HomeStore.self, from: data)
-                DispatchQueue.main.async {
-                    self.delegate?.didBestSellerUpdate(data: decodedData.bestSeller)
-                    self.delegate?.didHotSalesUpdate(data: decodedData.homeStore)
-                }
+            let decodedData = try decoder.decode(HomeStore.self, from: data)
+            DispatchQueue.main.async {
+                self.delegate?.didBestSellerUpdate(data: decodedData.bestSeller)
+                self.delegate?.didHotSalesUpdate(data: decodedData.homeStore)
+            }
         } catch {
             delegate?.didFailWithError(error: error)
+        }
+    }
+    
+    func fetchPhoneDetails() async -> PhoneDetails? {
+        guard let url = urlManager.getDetailedProductURL() else {
+            print("Bad url")
+            return nil
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        do {
+            let (data,_) = try await URLSession.shared.data(from: url)
+            let decodedData = try decoder.decode(PhoneDetails.self, from: data)
+            return decodedData
+        } catch {
+            print("Bad phone details")
+            print(error)
+            return nil
         }
     }
     

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ExplorerView: View {
     
+    @Binding var tabSelection: K.Tabs
     @StateObject var viewModel = ExplorerViewModel()
     
     var body: some View {
@@ -72,11 +73,11 @@ struct ExplorerView: View {
     }
 }
 
-struct ExplorerView_Previews: PreviewProvider {
-    static var previews: some View {
-        ExplorerView()
-    }
-}
+//struct ExplorerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ExplorerView()
+//    }
+//}
 
 extension ExplorerView {
     
@@ -98,7 +99,7 @@ extension ExplorerView {
         } else {
             return AnyView (
                 HotSaleSlider(items: viewModel.hotSaleItems) { item in
-                    HotSaleItem(item: item, height: height, width: width)
+                    HotSaleItem(tabSelection: $tabSelection, item: item, height: height, width: width)
                 }
                     .frame(width: width, height: height)
             )
@@ -108,7 +109,7 @@ extension ExplorerView {
     func setupBestSellerGrid(data: [Phone], cellHeight: CGFloat) -> some View {
         
         return GridView(data: data) { phone in
-            GridCell(item: phone, height: cellHeight)
+            GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
         }
     }
     

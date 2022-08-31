@@ -31,6 +31,7 @@
 		84D340EB28BE67A600977A8C /* CategoryScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D340EA28BE67A600977A8C /* CategoryScrollView.swift */; };
 		84D340ED28BE67B600977A8C /* CategoryScrollItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D340EC28BE67B600977A8C /* CategoryScrollItem.swift */; };
 		84D340EF28BE693A00977A8C /* CategoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D340EE28BE693A00977A8C /* CategoryItem.swift */; };
+		84D340F128BF86FA00977A8C /* NavBarCustomViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84D340F028BF86FA00977A8C /* NavBarCustomViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		84D340EA28BE67A600977A8C /* CategoryScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScrollView.swift; sourceTree = "<group>"; };
 		84D340EC28BE67B600977A8C /* CategoryScrollItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryScrollItem.swift; sourceTree = "<group>"; };
 		84D340EE28BE693A00977A8C /* CategoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItem.swift; sourceTree = "<group>"; };
+		84D340F028BF86FA00977A8C /* NavBarCustomViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarCustomViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				84D340E528BCFCE500977A8C /* HotSaleItem.swift */,
 				84D340EA28BE67A600977A8C /* CategoryScrollView.swift */,
 				84D340EC28BE67B600977A8C /* CategoryScrollItem.swift */,
+				84D340F028BF86FA00977A8C /* NavBarCustomViews.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				84D340DA28BA539300977A8C /* HomeStoreDataModel.swift in Sources */,
 				84BC553128BA39F0003FAE8F /* CartViewModel.swift in Sources */,
 				84D340ED28BE67B600977A8C /* CategoryScrollItem.swift in Sources */,
+				84D340F128BF86FA00977A8C /* NavBarCustomViews.swift in Sources */,
 				84BC552B28BA39CB003FAE8F /* DetailedView.swift in Sources */,
 				84D340E228BA5EC800977A8C /* URLManager.swift in Sources */,
 				84BC550C28BA3734003FAE8F /* PhoneStoreAppApp.swift in Sources */,

@@ -6,3 +6,18 @@
 //
 
 import Foundation
+
+class DetailedViewModel: ObservableObject {
+    
+    private let networkManager = NetworkManager()
+    
+    @Published var phoneDetails: PhoneDetails?
+    
+    func loadPhoneDetails() async {
+        let details = await networkManager.fetchPhoneDetails()
+        DispatchQueue.main.async {
+            self.phoneDetails = details
+        }
+    }
+    
+}

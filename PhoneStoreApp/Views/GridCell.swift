@@ -9,6 +9,8 @@ import SwiftUI
 
 struct GridCell: View {
     
+    @Binding var tabSelection: K.Tabs
+    
     var item: Phone
     var height: CGFloat
     
@@ -20,7 +22,7 @@ struct GridCell: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DetailedView()) {
+        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
             setupCell()
         }
     }
@@ -45,7 +47,7 @@ struct GridCell: View {
             .frame(minWidth: .zero, maxWidth: .infinity, alignment: .leading)
             .background(Color(uiColor: .systemBackground))
         }
-        .modifier(RoundedCornersWithShadow(value: K.Values.CornerRadius))
+        .modifier(RoundedCornersWithShadow(value: K.Values.cornerRadius))
     }
 }
 
@@ -124,7 +126,7 @@ extension GridCell {
                 }
             }
             .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity, alignment: .topTrailing)
-            .padding([.top, .trailing], K.Values.CornerRadius / 2)
+            .padding([.top, .trailing], K.Values.cornerRadius / 2)
         }
     }
 

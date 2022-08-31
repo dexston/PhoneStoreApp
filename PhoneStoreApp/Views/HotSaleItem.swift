@@ -9,12 +9,14 @@ import SwiftUI
 
 struct HotSaleItem: View {
     
+    @Binding var tabSelection: K.Tabs
+    
     let item: HotSale
     let height: CGFloat
     let width: CGFloat
     
     var body: some View {
-        NavigationLink(destination: DetailedView()) {
+        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
             setupHotSaleItem()
         }
     }
@@ -37,7 +39,7 @@ struct HotSaleItem: View {
             }
             .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity, alignment: .leading)
         }
-        .modifier(RoundedCorners(value: K.Values.CornerRadius))
+        .modifier(RoundedCorners(value: K.Values.cornerRadius))
         .padding(.horizontal, 10)
     }
 }
@@ -109,7 +111,7 @@ extension HotSaleItem {
             }
             .background(.white)
             .foregroundColor(K.Colors.darkBlue)
-            .clipShape(RoundedRectangle(cornerRadius: K.Values.CornerRadius / 2))
+            .clipShape(RoundedRectangle(cornerRadius: K.Values.cornerRadius / 2))
             .padding(.horizontal, 20)
         }
     }
