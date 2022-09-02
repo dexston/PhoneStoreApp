@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExplorerView: View {
     
-    @Binding var tabSelection: K.Tabs
+    @Binding var tabSelection: K.MainViewTabs
     @StateObject var viewModel = ExplorerViewModel()
     
     var body: some View {
@@ -107,9 +107,19 @@ extension ExplorerView {
     }
     
     func setupBestSellerGrid(data: [Phone], cellHeight: CGFloat) -> some View {
-        
-        return GridView(data: data) { phone in
-            GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
+        if viewModel.bestSellerItems.isEmpty {
+            return AnyView (
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: .infinity, alignment: .center)
+                    .padding(20)
+            )
+        } else {
+            return AnyView (
+                GridView(data: data) { phone in
+                    GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
+                }
+            )
         }
     }
     
@@ -137,5 +147,4 @@ extension ExplorerView {
             .padding(.trailing, 20)
         }
     }
-    
 }

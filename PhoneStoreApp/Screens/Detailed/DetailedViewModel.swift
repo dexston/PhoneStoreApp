@@ -13,6 +13,9 @@ class DetailedViewModel: ObservableObject {
     
     @Published var phoneDetails: PhoneDetails?
     
+    @Published var selectedColor: String = ""
+    @Published var selectedCapacity: String = ""
+    
     func loadPhoneDetails() async {
         let details = await networkManager.fetchPhoneDetails()
         DispatchQueue.main.async {

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var tabSelection: K.Tabs
+    @State var tabSelection: K.MainViewTabs
     
     @StateObject var viewModel = MainViewModel()
     
@@ -23,13 +23,13 @@ struct MainView: View {
                 .tabItem {
                     Label("Explorer", systemImage: "xmark")
                 }
-                .tag(K.Tabs.explorer)
+                .tag(K.MainViewTabs.explorer)
             CartView()
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
                 .badge(5)
-                .tag(K.Tabs.cart)
+                .tag(K.MainViewTabs.cart)
         }
     }
 }

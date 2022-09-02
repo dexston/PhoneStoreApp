@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GridCell: View {
     
-    @Binding var tabSelection: K.Tabs
+    @Binding var tabSelection: K.MainViewTabs
     
     var item: Phone
     var height: CGFloat

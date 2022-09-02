@@ -19,9 +19,8 @@ struct K {
         static let cornerRadius: CGFloat = 15
     }
     
-    enum Tabs {
+    enum MainViewTabs {
         case explorer
         case cart
     }
-    
 }

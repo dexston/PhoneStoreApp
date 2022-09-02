@@ -20,9 +20,8 @@ struct CategoryScrollView<Content: View>: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal) {
+        ScrollView(.horizontal, showsIndicators: false) {
             self.setupCategories()
-                .padding(.vertical, spacing / 2)
                 .padding(.horizontal, spacing)
         }
     }
@@ -31,7 +30,7 @@ struct CategoryScrollView<Content: View>: View {
         
         let rows: [GridItem] = Array(repeating: GridItem(.flexible(), alignment: .leading), count: lines)
         
-        return LazyHGrid(rows: rows, alignment: .top, spacing: spacing) { 
+        return LazyHGrid(rows: rows, alignment: .top) { 
             ForEach(data, id: \.id) { item in
                 self.itemViewBuilder(item)
             }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HotSaleItem: View {
     
-    @Binding var tabSelection: K.Tabs
+    @Binding var tabSelection: K.MainViewTabs
     
     let item: HotSale
     let height: CGFloat
