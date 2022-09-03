@@ -16,9 +16,11 @@ class URLManager {
     func getHomeStoreURL() -> URL? {
         return URL(string: homeStoreURL)
     }
+    
     func getDetailedProductURL() -> URL? {
         return URL(string: detailedProductURL)
     }
+    
     func getCartURL() -> URL? {
         return URL(string: cartURL)
     }

@@ -20,71 +20,87 @@ struct GridCell: View {
     var infoHeight: CGFloat {
         height * 0.3
     }
+    var likeButtonHeight: CGFloat {
+        height * 0.1
+    }
     
     var body: some View {
         NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
-            setupCell()
-        }
-    }
-    
-    private func setupCell() -> some View {
-        return VStack(alignment: .leading, spacing: 0) {
-            ZStack {
-                PosterImage(url: item.picture, height: posterHeight)
-                LikeButton(item: item, diameter: height * 0.12) {
-                    print("Like pressed")
+            VStack(alignment: .leading, spacing: .zero) {
+                ZStack {
+                    PosterImage(url: item.picture, height: posterHeight)
+                    LikeButton(item: item, height: likeButtonHeight) {
+                        print("Like pressed")
+                    }
                 }
-            }
-            VStack(alignment: .leading, spacing: 5) {
-                HStack(alignment: .firstTextBaseline) {
-                    PriceDiscount(value: item.priceWithoutDiscount)
-                    PriceFull(value: item.discountPrice)
+                VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.GridCell.infoBlock) {
+                    HStack(alignment: .firstTextBaseline) {
+                        PriceDiscount(value: item.priceWithoutDiscount)
+                        PriceFull(value: item.discountPrice)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    PhoneTitle(value: item.title)
                 }
-                PhoneTitle(value: item.title)
+                .padding(.horizontal)
+                .frame(height: infoHeight)
+                .background(Color(uiColor: .systemBackground))
             }
-            .padding(10)
-            .frame(height: infoHeight)
-            .frame(minWidth: .zero, maxWidth: .infinity, alignment: .leading)
-            .background(Color(uiColor: .systemBackground))
+            .cornerRadius(K.CornerRadius.ExplorerView.gridCell)
+            .shadow(color: .secondary.opacity(0.3), radius: 5)
         }
-        .modifier(RoundedCornersWithShadow(value: K.Values.cornerRadius))
     }
 }
 
 extension GridCell {
     
     struct PriceDiscount: View {
+        
         let value: Int
+        
         var body: some View {
             Text("$\(value)")
-                .font(.title)
+                .font(.title2)
                 .fontWeight(.bold)
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
                 .foregroundColor(K.Colors.darkBlue)
         }
     }
     
     struct PriceFull: View {
+        
         let value: Int
+        
         var body: some View {
             Text("$\(value)")
                 .font(.footnote)
                 .strikethrough()
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
                 .foregroundColor(.secondary)
         }
     }
     
     struct PhoneTitle: View {
+        
         let value: String
+        
         var body: some View {
             Text(value)
                 .font(.footnote)
+                .fontWeight(.light)
+                .lineLimit(1)
+                .minimumScaleFactor(0.3)
                 .foregroundColor(K.Colors.darkBlue)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     
     struct PosterImage: View {
+        
         let url: URL?
         let height: CGFloat
+        
         var body: some View {
             AsyncImage(url: url) { image in
                 image
@@ -93,7 +109,7 @@ extension GridCell {
             } placeholder: {
                 ProgressView()
                     .progressViewStyle(.circular)
-                    .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .background(Color(uiColor: .systemBackground))
             }
             .frame(minWidth: .zero, maxWidth: .infinity)
@@ -103,12 +119,15 @@ extension GridCell {
     }
     
     struct LikeButton: View {
+        
         let item: Phone
-        let diameter: CGFloat
-        var iconFrame: CGFloat {
-            diameter * 0.5
-        }
+        let height: CGFloat
         let action: () -> ()
+        
+        var iconFrame: CGFloat {
+            height * 0.5
+        }
+        
         var body: some View {
             Button {
                 action()
@@ -116,7 +135,7 @@ extension GridCell {
                 ZStack {
                     Circle()
                         .fill(.white)
-                        .frame(width: diameter, height: diameter)
+                        .frame(width: height, height: height)
                         .shadow(color: .secondary.opacity(0.3), radius: 5)
                     Image(systemName: item.isFavorites ? "heart.fill" : "heart")
                         .resizable()
@@ -125,17 +144,8 @@ extension GridCell {
                         .foregroundColor(K.Colors.orange)
                 }
             }
-            .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity, alignment: .topTrailing)
-            .padding([.top, .trailing], K.Values.cornerRadius / 2)
-        }
-    }
-
-    struct RoundedCornersWithShadow: ViewModifier {
-        let value: CGFloat
-        func body(content: Content) -> some View {
-            return content
-                .cornerRadius(value)
-                .shadow(color: .secondary.opacity(0.3), radius: 5)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
+            .padding([.top, .trailing], K.Paddings.ExplorerView.gridCellLikeButton)
         }
     }
 }

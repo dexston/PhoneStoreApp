@@ -10,8 +10,6 @@ import SwiftUI
 struct SelectionScrollView<Content: View>: View {
     
     let data: [String]
-    let lines: Int = 1
-    let spacing: CGFloat = 20
     let itemViewBuilder: (String) -> Content
     
     init(data: [String], itemViewBuilder: @escaping (String) -> Content) {
@@ -20,18 +18,14 @@ struct SelectionScrollView<Content: View>: View {
     }
     
     var body: some View {
+        
+        let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: K.Values.selectionLines)
+        
         ScrollView(.horizontal, showsIndicators: false) {
-            setupCategories()
-        }
-    }
-    
-    func setupCategories() -> some View {
-        
-        let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: lines)
-        
-        return LazyHGrid(rows: rows, alignment: .center) {
-            ForEach(data, id: \.self) { item in
-                self.itemViewBuilder(item)
+            LazyHGrid(rows: rows, alignment: .center) {
+                ForEach(data, id: \.self) { item in
+                    self.itemViewBuilder(item)
+                }
             }
         }
     }

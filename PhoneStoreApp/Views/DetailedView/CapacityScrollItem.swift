@@ -8,23 +8,25 @@
 import SwiftUI
 
 struct CapacityScrollItem: View {
+    
     let value: String
     let height: CGFloat
     let selectedCapacity: String
     let action: (String) -> ()
+    
     var body: some View {
         Button {
             action(value)
         } label: {
             Text(value + " GB")
-                .font(.body)
+                .font(.subheadline)
                 .minimumScaleFactor(0.5)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 5)
+                .padding(.horizontal)
+                .padding(.vertical, K.Paddings.DetailedView.capacityScrollItem)
         }
-        .background(K.Colors.orange.opacity(value == selectedCapacity ? 1.0 : 0.0))
+        .background(K.Colors.orange.opacity(value == selectedCapacity ? 1.0 : .zero))
         .foregroundColor(value == selectedCapacity ? .white : .secondary)
-        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .cornerRadius(K.CornerRadius.DetailedView.capacityScrollItem)
         .frame(height: height)
     }
 }

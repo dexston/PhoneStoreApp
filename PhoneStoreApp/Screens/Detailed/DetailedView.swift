@@ -17,8 +17,10 @@ struct DetailedView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            
             let frame = geometry.frame(in: .global)
             let detailsHeight = frame.height * 0.6
+            
             VStack {
                 VStack {
                     //There will be images
@@ -41,10 +43,8 @@ struct DetailedView: View {
                     }
                 }
             }
-            .onAppear {
-                Task {
-                    await viewModel.loadPhoneDetails()
-                }
+            .task {
+                await viewModel.loadPhoneDetails()
             }
         }
     }
@@ -57,20 +57,14 @@ struct DetailedView: View {
 //}
 
 extension DetailedView {
-    func setupDetails(height: CGFloat) -> some View {
-        guard let phoneDetails = viewModel.phoneDetails else {
-            return AnyView(
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity)
-            )
-        }
-        let likeButtonHeight = height * 0.1
-        let ratingHeight = height * 0.08
-        let detailsTabViewHeight = height * 0.35
-        let colorCircleHeight = height * 0.1
-        let addButtonHeight = height * 0.08
-        return AnyView(
+    
+    @ViewBuilder func setupDetails(height: CGFloat) -> some View {
+        if let phoneDetails = viewModel.phoneDetails {
+            let likeButtonHeight = height * 0.1
+            let ratingHeight = height * 0.08
+            let detailsTabViewHeight = height * 0.35
+            let selectionBlockHeight = height * 0.1
+            let addButtonHeight = height * 0.08
             ScrollView(showsIndicators: false) {
                 VStack {
                     HStack {
@@ -83,31 +77,39 @@ extension DetailedView {
                     .frame(height: likeButtonHeight)
                     StarsRating(value: phoneDetails.rating, height: ratingHeight)
                     DetailsTabView(phoneDetails: phoneDetails, height: detailsTabViewHeight)
-                        .frame(height: detailsTabViewHeight)
                     SelectionTitle()
                     HStack {
                         SelectionScrollView(data: phoneDetails.color) { color in
-                            ColorScrollItem(item: color, height: colorCircleHeight, selectedColor: viewModel.selectedColor) { color in
-                                viewModel.selectedColor = color
-                            }
+                            ColorScrollItem(item: color,
+                                            height: selectionBlockHeight,
+                                            selectedColor: viewModel.selectedColor,
+                                            action: { color in viewModel.selectedColor = color })
                         }
                         SelectionScrollView(data: phoneDetails.capacity) { capacity in
-                            CapacityScrollItem(value: capacity, height: colorCircleHeight, selectedCapacity: viewModel.selectedCapacity) { capacity in
-                                viewModel.selectedCapacity = capacity
-                            }
+                            CapacityScrollItem(value: capacity,
+                                               height: selectionBlockHeight,
+                                               selectedCapacity: viewModel.selectedCapacity,
+                                               action: { capacity in viewModel.selectedCapacity = capacity })
                         }
                     }
                     AddToCartButton(price: phoneDetails.price, height: addButtonHeight)
                 }
-                .padding(20)
+                .padding(K.Paddings.DetailedView.infoBlock)
             }
-                .background(.white)
-                .modifier(RoundedCornersWithShadow(value: 30))
-        )
+            .background(.white)
+            .cornerRadius(K.CornerRadius.DetailedView.infoBlock)
+            .shadow(color: .secondary.opacity(0.4), radius: 10)
+        }  else {
+            ProgressView()
+                .progressViewStyle(.circular)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
     }
     
     struct DeviceTitle: View {
+        
         let title: String
+        
         var body: some View {
             Text(title)
                 .font(.title2)
@@ -119,18 +121,21 @@ extension DetailedView {
     }
     
     struct LikeButton: View {
+        
         let isLiked: Bool
         let height: CGFloat
+        let action: () -> ()
+    
         var iconFrame: CGFloat {
             height * 0.5
         }
-        let action: () -> ()
+        
         var body: some View {
             Button {
                 action()
             } label: {
                 ZStack {
-                    RoundedRectangle(cornerRadius: 10)
+                    RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.likeButton)
                         .fill(K.Colors.darkBlue)
                         .aspectRatio(1, contentMode: .fill)
                         .frame(width: height, height: height)
@@ -145,8 +150,10 @@ extension DetailedView {
     }
     
     struct StarsRating: View {
+        
         let value: Double
         let height: CGFloat
+        
         var body: some View {
             HStack {
                 let stars = starCounter()
@@ -178,20 +185,21 @@ extension DetailedView {
     }
     
     struct SelectionTitle: View {
+        
         var body: some View {
-            HStack {
-                Text("Select color and capacity")
-                    .font(.body)
-                    .minimumScaleFactor(0.5)
-                    .foregroundColor(K.Colors.darkBlue)
-                Spacer()
-            }
+            Text("Select color and capacity")
+                .font(.body)
+                .minimumScaleFactor(0.5)
+                .foregroundColor(K.Colors.darkBlue)
+                .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
     
     struct AddToCartButton: View {
+        
         let price: Int
         let height: CGFloat
+        
         var body: some View {
             Button {
                 print("Add to cart")
@@ -207,22 +215,13 @@ extension DetailedView {
                         .frame(maxWidth: .infinity)
                 }
                 .frame(height: height)
-                .padding(.vertical, 15)
+                .padding(.vertical, K.Paddings.DetailedView.addToCartButtonText)
             }
             .background(K.Colors.orange)
             .foregroundColor(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 15))
+            .cornerRadius(K.CornerRadius.DetailedView.addToCartButton)
             .frame(maxWidth: .infinity)
-            .padding(.top, 10)
-        }
-    }
-    
-    struct RoundedCornersWithShadow: ViewModifier {
-        let value: CGFloat
-        func body(content: Content) -> some View {
-            return content
-                .cornerRadius(value)
-                .shadow(color: .secondary.opacity(0.4), radius: 10)
+            .padding(.top, K.Paddings.DetailedView.addToCartButton)
         }
     }
 }

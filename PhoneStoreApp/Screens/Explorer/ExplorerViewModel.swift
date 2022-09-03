@@ -16,7 +16,7 @@ class ExplorerViewModel: ObservableObject {
     @Published var hotSaleItems: [HotSale] = []
     
     @Published var categories: [CategoryItem] = []
-    @Published var currentCategory: Int = 0 {
+    private var currentCategory: Int = 1 {
         didSet {
             markCategoryAsSelected()
         }
@@ -31,7 +31,7 @@ class ExplorerViewModel: ObservableObject {
             CategoryItem(id: 5, icon: "music.note", title: "Music"),
             CategoryItem(id: 6, icon: "gamecontroller", title: "Games")
         ]
-        currentCategory = 1
+        markCategoryAsSelected()
     }
     
     @MainActor func loadContent() async {
@@ -44,7 +44,7 @@ class ExplorerViewModel: ObservableObject {
         }
     }
     
-    func markCategoryAsSelected() {
+    private func markCategoryAsSelected() {
         categories.indices.forEach { i in
             categories[i].isSelected = categories[i].id == currentCategory
         }
@@ -53,6 +53,5 @@ class ExplorerViewModel: ObservableObject {
     func categorySelected(id: Int) {
         currentCategory = id
     }
-    
 }
 

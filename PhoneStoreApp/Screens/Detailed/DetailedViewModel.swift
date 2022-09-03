@@ -12,7 +12,6 @@ class DetailedViewModel: ObservableObject {
     private let networkManager = NetworkManager()
     
     @Published var phoneDetails: PhoneDetails?
-    
     @Published var selectedColor: String = ""
     @Published var selectedCapacity: String = ""
     
@@ -24,5 +23,4 @@ class DetailedViewModel: ObservableObject {
             print(error)
         }
     }
-    
 }

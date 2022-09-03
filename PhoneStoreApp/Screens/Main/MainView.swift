@@ -9,17 +9,11 @@ import SwiftUI
 
 struct MainView: View {
     
-    @State var tabSelection: K.MainViewTabs
-    
     @StateObject var viewModel = MainViewModel()
     
-    init() {
-        tabSelection = .explorer
-    }
-    
     var body: some View {
-        TabView(selection: $tabSelection) {
-            ExplorerView(tabSelection: $tabSelection)
+        TabView(selection: $viewModel.tabSelection) {
+            ExplorerView(tabSelection: $viewModel.tabSelection)
                 .tabItem {
                     Label("Explorer", systemImage: "xmark")
                 }

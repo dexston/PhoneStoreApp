@@ -15,32 +15,33 @@ struct HotSaleItem: View {
     let height: CGFloat
     let width: CGFloat
     
-    var body: some View {
-        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
-            setupHotSaleItem()
-        }
+    var newIconHeight: CGFloat {
+        height * 0.18
+    }
+    var buyButtonWidth: CGFloat {
+        width * 0.3
     }
     
-    func setupHotSaleItem() -> some View {
-        return ZStack {
-            BackdropImage(url: item.picture, height: height)
-            VStack(alignment: .leading) {
-                if let isNew = item.isNew,
-                   isNew == true {
-                    NewIcon(diameter: height * 0.18)
+    var body: some View {
+        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
+            ZStack {
+                BackdropImage(url: item.picture, height: height)
+                VStack(alignment: .leading) {
+                    if item.isNew == true {
+                        NewIcon(height: newIconHeight)
+                    }
+                    Title(value: item.title)
+                    Subtitle(value: item.subtitle)
+                    BuyButton(width: buyButtonWidth) {
+                        print("Buy button pressed")
+                    }
                 }
-                Title(value: item.title)
-                    .frame(width: width / 2, alignment: .leading)
-                Subtitle(value: item.subtitle)
-                    .frame(width: width / 2, alignment: .leading)
-                BuyButton {
-                    print("buy")
-                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                .padding(.leading, K.Paddings.HotSaleItem.content)
             }
-            .frame(minWidth: .zero, maxWidth: .infinity, minHeight: .zero, maxHeight: .infinity, alignment: .leading)
+            .cornerRadius(K.CornerRadius.HotSaleItem.backdropImage)
+            .padding(.horizontal, K.Paddings.HotSaleItem.wholeBlock)
         }
-        .modifier(RoundedCorners(value: K.Values.cornerRadius))
-        .padding(.horizontal, 10)
     }
 }
 
@@ -53,7 +54,9 @@ struct HotSaleItem: View {
 extension HotSaleItem {
     
     struct Title: View {
+        
         let value: String
+        
         var body: some View {
             Text(value)
                 .font(.title)
@@ -61,65 +64,73 @@ extension HotSaleItem {
                 .lineLimit(2)
                 .minimumScaleFactor(0.5)
                 .multilineTextAlignment(.leading)
-                .padding(.horizontal, 20)
-                .modifier(LettersWithStroke())
+                .foregroundColor(.white)
         }
     }
 
     struct Subtitle: View {
+        
         let value: String
+        
         var body: some View {
             Text(value)
-                .font(.body)
+                .font(.footnote)
                 .lineLimit(2)
                 .multilineTextAlignment(.leading)
-                .padding(.horizontal, 20)
-                .modifier(LettersWithStroke())
+                .foregroundColor(.white)
         }
     }
     
     struct NewIcon: View {
-        let diameter: CGFloat
+        
+        let height: CGFloat
+        
         var textWidth: CGFloat {
-            diameter * 0.8
+            height * 0.8
         }
+        
         var body: some View {
             ZStack {
                 Circle()
                     .fill(K.Colors.orange)
-                    .frame(width: diameter, height: diameter)
+                    .frame(width: height, height: height)
                 Text("New")
+                    .font(.caption)
                     .fontWeight(.heavy)
                     .lineLimit(1)
                     .minimumScaleFactor(0.1)
                     .frame(width: textWidth)
                     .foregroundColor(.white)
             }
-            .padding(.horizontal, 20)
         }
     }
     
     struct BuyButton: View {
+        
+        let width: CGFloat
         let action: () -> ()
+        
         var body: some View {
             Button {
                 action()
             } label: {
                 Text("Buy now!")
-                    .padding(.horizontal, 25)
-                    .padding(.vertical, 5)
+                    .font(.footnote)
+                    .fontWeight(.bold)
+                    .padding(.vertical, K.Paddings.HotSaleItem.buyButtonText)
             }
+            .frame(width: width)
             .background(.white)
             .foregroundColor(K.Colors.darkBlue)
-            .clipShape(RoundedRectangle(cornerRadius: K.Values.cornerRadius / 2))
-            .padding(.horizontal, 20)
+            .cornerRadius(K.CornerRadius.HotSaleItem.buyButton)
         }
     }
     
-    
     struct BackdropImage: View {
+        
         let url: URL?
         let height: CGFloat
+        
         var body: some View {
             AsyncImage(url: url) { image in
                 image
@@ -133,23 +144,4 @@ extension HotSaleItem {
             .frame(height: height)
         }
     }
-    
-    struct RoundedCorners: ViewModifier {
-        let value: CGFloat
-        func body(content: Content) -> some View {
-            return content
-                .cornerRadius(value)
-        }
-    }
-    
-    struct LettersWithStroke: ViewModifier {
-        func body(content: Content) -> some View {
-            return content
-                .foregroundColor(.white)
-                .shadow(color: K.Colors.darkBlue, radius: 0.6)
-                .shadow(color: K.Colors.darkBlue, radius: 0.6)
-                .shadow(color: K.Colors.darkBlue, radius: 0.6)
-        }
-    }
-    
 }

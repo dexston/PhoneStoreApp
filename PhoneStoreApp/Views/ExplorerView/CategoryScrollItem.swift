@@ -45,8 +45,7 @@ struct CategoryScrollItem: View {
                     .frame(height: titleHeight)
             }
         }
-        .padding(.vertical, 10)
-        .padding(.horizontal, 7)
+        .padding(.vertical, K.Paddings.ExplorerView.categoryItem)
     }
 }
 

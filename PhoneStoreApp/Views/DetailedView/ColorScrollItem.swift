@@ -11,11 +11,12 @@ struct ColorScrollItem: View {
     
     var item: String
     var height: CGFloat
+    var selectedColor: String
+    let action: (String) -> ()
+    
     var iconFrame: CGFloat {
         height * 0.4
     }
-    var selectedColor: String
-    let action: (String) -> ()
     
     var body: some View {
         Button {
@@ -31,7 +32,7 @@ struct ColorScrollItem: View {
                     .scaledToFit()
                     .frame(width: iconFrame, height: iconFrame)
                     .foregroundColor(.white)
-                    .opacity(item == selectedColor ? 1.0 : 0.0)
+                    .opacity(item == selectedColor ? 1.0 : .zero)
             }
         }
     }

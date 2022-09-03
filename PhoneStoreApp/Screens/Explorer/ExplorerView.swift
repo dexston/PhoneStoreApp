@@ -14,27 +14,32 @@ struct ExplorerView: View {
     
     var body: some View {
         GeometryReader { geometry in
+            
             let frame = geometry.frame(in: .global)
+            let categoriesHeight = frame.height * 0.1
+            let hotSalesHeight = frame.height * 0.25
+            let bestSellerCellHeight = frame.height * 0.4
+            
             NavigationView {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 10) {
+                    VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.wholeBlock) {
                         BlockLabel(title: "Select category",
                                    extendButton: "view all") {
                             print("View all categories")
                         }
-                        setupCategories(data: viewModel.categories, height: frame.height * 0.1)
+                        setupCategories(data: viewModel.categories, height: categoriesHeight)
                         //
                         BlockLabel(title: "Hot sales",
                                    extendButton: "see all") {
                             print("See all sales")
                         }
-                        setupHotSaleCarousel(height: frame.height * 0.25, width: frame.width)
+                        setupHotSaleCarousel(height: hotSalesHeight, width: frame.width)
                         //
                         BlockLabel(title: "Best seller",
                                    extendButton: "see more") {
                             print("See more best sellers")
                         }
-                        setupBestSellerGrid(data: viewModel.bestSellerItems, cellHeight: frame.height * 0.33)
+                        setupBestSellerGrid(data: viewModel.bestSellerItems, cellHeight: bestSellerCellHeight)
                         //
                         Spacer()
                     }
@@ -62,10 +67,8 @@ struct ExplorerView: View {
                         }
                     }
                 }
-                .onAppear {
-                    Task {
-                        await viewModel.loadContent()
-                    }
+                .task {
+                    await viewModel.loadContent()
                 }
             }
             .navigationViewStyle(.stack)
@@ -81,45 +84,36 @@ struct ExplorerView: View {
 
 extension ExplorerView {
     
-    func setupCategories(data: [CategoryItem], height: CGFloat) -> some View {
-        return CategoryScrollView(data: data) { category in
+    @ViewBuilder func setupCategories(data: [CategoryItem], height: CGFloat) -> some View {
+        CategoryScrollView(data: data) { category in
             CategoryScrollItem(item: category, height: height) { id in
                 viewModel.categorySelected(id: id)
             }
         }
     }
     
-    func setupHotSaleCarousel(height: CGFloat, width: CGFloat) -> some View {
+    @ViewBuilder func setupHotSaleCarousel(height: CGFloat, width: CGFloat) -> some View {
         if viewModel.hotSaleItems.isEmpty {
-            return AnyView (
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .frame(width: width, height: height, alignment: .center)
-            )
+            ProgressView()
+                .progressViewStyle(.circular)
+                .frame(width: width, height: height, alignment: .center)
         } else {
-            return AnyView (
-                HotSaleSlider(items: viewModel.hotSaleItems) { item in
-                    HotSaleItem(tabSelection: $tabSelection, item: item, height: height, width: width)
-                }
-                    .frame(width: width, height: height)
-            )
+            HotSaleSlider(items: viewModel.hotSaleItems) { item in
+                HotSaleItem(tabSelection: $tabSelection, item: item, height: height, width: width)
+            }
+            .frame(width: width, height: height)
         }
     }
     
-    func setupBestSellerGrid(data: [Phone], cellHeight: CGFloat) -> some View {
+    @ViewBuilder func setupBestSellerGrid(data: [Phone], cellHeight: CGFloat) -> some View {
         if viewModel.bestSellerItems.isEmpty {
-            return AnyView (
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: .infinity, alignment: .center)
-                    .padding(20)
-            )
+            ProgressView()
+                .progressViewStyle(.circular)
+                .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: .infinity, alignment: .center)
         } else {
-            return AnyView (
-                GridView(data: data) { phone in
-                    GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
-                }
-            )
+            GridView(data: data) { phone in
+                GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
+            }
         }
     }
     
@@ -143,8 +137,7 @@ extension ExplorerView {
                         .foregroundColor(K.Colors.orange)
                 }
             }
-            .padding(.leading, 15)
-            .padding(.trailing, 20)
+            .padding(.horizontal, K.Paddings.ExplorerView.blockTitle)
         }
     }
 }

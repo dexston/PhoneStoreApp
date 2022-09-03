@@ -10,13 +10,12 @@ import SwiftUI
 struct HotSaleSlider<Content: View>: View {
     
     let items: [HotSale]
-    
     let itemViewBuilder: (HotSale) -> Content
     
     var body: some View {
         TabView {
             ForEach(items, id: \.self) { item in
-                self.itemViewBuilder(item)
+                itemViewBuilder(item)
             }
         }
         .tabViewStyle(.page(indexDisplayMode: .never))
