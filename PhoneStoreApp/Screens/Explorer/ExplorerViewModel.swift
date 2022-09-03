@@ -35,8 +35,14 @@ class ExplorerViewModel: ObservableObject {
         currentCategory = 1
     }
     
-    func loadContent() async {
-        await networkManager.fetchHomeStore()
+    @MainActor func loadContent() async {
+        do {
+            let result = try await networkManager.fetchHomeStore()
+            bestSellerItems = result.bestSeller
+            hotSaleItems = result.homeStore
+        } catch {
+            print(error)
+        }
     }
     
     func markCategoryAsSelected() {
@@ -51,18 +57,3 @@ class ExplorerViewModel: ObservableObject {
     
 }
 
-extension ExplorerViewModel: NetworkManagerDelegate {
-    func didBestSellerUpdate(data: [Phone]) {
-        bestSellerItems = data
-    }
-    
-    func didHotSalesUpdate(data: [HotSale]) {
-        hotSaleItems = data
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error.localizedDescription)
-    }
-    
-    
-}

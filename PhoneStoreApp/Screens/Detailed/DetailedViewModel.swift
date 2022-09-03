@@ -16,10 +16,12 @@ class DetailedViewModel: ObservableObject {
     @Published var selectedColor: String = ""
     @Published var selectedCapacity: String = ""
     
-    func loadPhoneDetails() async {
-        let details = await networkManager.fetchPhoneDetails()
-        DispatchQueue.main.async {
-            self.phoneDetails = details
+    @MainActor func loadPhoneDetails() async {
+        do {
+            let details = try await networkManager.fetchPhoneDetails()
+            phoneDetails = details
+        } catch {
+            print(error)
         }
     }
     
