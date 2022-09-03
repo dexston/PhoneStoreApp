@@ -23,7 +23,6 @@ class ExplorerViewModel: ObservableObject {
     }
 
     init() {
-        networkManager.delegate = self
         categories = [
             CategoryItem(id: 1, icon: "iphone", title: "Phones"),
             CategoryItem(id: 2, icon: "desktopcomputer", title: "Computers"),
