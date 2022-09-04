@@ -24,7 +24,7 @@ struct CapacityScrollItem: View {
                 .padding(.horizontal)
                 .padding(.vertical, K.Paddings.DetailedView.capacityScrollItem)
         }
-        .background(K.Colors.orange.opacity(value == selectedCapacity ? 1.0 : .zero))
+        .background(Color(K.Colors.orange).opacity(value == selectedCapacity ? 1.0 : .zero))
         .foregroundColor(value == selectedCapacity ? .white : .secondary)
         .cornerRadius(K.CornerRadius.DetailedView.capacityScrollItem)
         .frame(height: height)

@@ -49,10 +49,10 @@ struct ExplorerView: View {
                     ToolbarItem(placement: .principal) {
                         Label {
                             Text("Hellomoto")
-                                .foregroundColor(K.Colors.darkBlue)
+                                .foregroundColor(Color(K.Colors.darkBlue))
                         } icon: {
                             Image(systemName: "map")
-                                .foregroundColor(K.Colors.orange)
+                                .foregroundColor(Color(K.Colors.orange))
                         }
                         .labelStyle(.titleAndIcon)
                         
@@ -63,7 +63,7 @@ struct ExplorerView: View {
                         } label: {
                             Image(systemName: "slider.horizontal.3")
                                 .imageScale(.large)
-                                .foregroundColor(K.Colors.darkBlue)
+                                .foregroundColor(Color(K.Colors.darkBlue))
                         }
                     }
                 }
@@ -127,14 +127,14 @@ extension ExplorerView {
             HStack(alignment: .center) {
                 Text(title)
                     .font(.title)
-                    .foregroundColor(K.Colors.darkBlue)
+                    .foregroundColor(Color(K.Colors.darkBlue))
                 Spacer()
                 Button {
                     action()
                 } label: {
                     Text(extendButton)
                         .font(.callout)
-                        .foregroundColor(K.Colors.orange)
+                        .foregroundColor(Color(K.Colors.orange))
                 }
             }
             .padding(.horizontal, K.Paddings.ExplorerView.blockTitle)

@@ -74,13 +74,13 @@ extension DetailsTabView {
             } label: {
                 VStack(spacing: .zero) {
                     Text("\(type.rawValue.localizedCapitalized)")
-                        .foregroundColor(isActive() ? K.Colors.darkBlue : .secondary)
+                        .foregroundColor(isActive() ? Color(K.Colors.darkBlue) : .secondary)
                         .fontWeight(isActive() ? .bold : .regular)
                         .minimumScaleFactor(0.5)
                         .frame(maxWidth: .infinity)
                         .frame(height: textHeight)
                     RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.specInfoTabLine)
-                        .fill(K.Colors.orange.opacity(isActive() ? 1.0 : .zero))
+                        .fill(Color(K.Colors.orange).opacity(isActive() ? 1.0 : .zero))
                         .frame(height: lineHeight)
                         .frame(maxWidth: .infinity)
                 }

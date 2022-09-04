@@ -18,7 +18,7 @@ struct NavBarBackButton: View {
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
-                    .fill(K.Colors.darkBlue)
+                    .fill(Color(K.Colors.darkBlue))
                     .aspectRatio(1, contentMode: .fill)
                 Image(systemName: "chevron.backward")
                     .imageScale(.medium)
@@ -39,7 +39,7 @@ struct NavBarCartButton: View {
         } label: {
             ZStack {
                 RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
-                    .fill(K.Colors.orange)
+                    .fill(Color(K.Colors.orange))
                     .aspectRatio(1, contentMode: .fill)
                 Image(systemName: "bag")
                     .imageScale(.medium)

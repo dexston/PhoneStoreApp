@@ -11,6 +11,7 @@
 		8427F21728C1EAF4001347B2 /* ColorScrollItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8427F21628C1EAF4001347B2 /* ColorScrollItem.swift */; };
 		84A25AC328C1F21E003242FD /* HotSaleSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25AC228C1F21E003242FD /* HotSaleSlider.swift */; };
 		84A25AC528C1F4F7003242FD /* CapacityScrollItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25AC428C1F4F7003242FD /* CapacityScrollItem.swift */; };
+		84A25AC728C4DD3E003242FD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25AC628C4DD3E003242FD /* HexColorExtension.swift */; };
 		84BC550C28BA3734003FAE8F /* PhoneStoreAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC550B28BA3734003FAE8F /* PhoneStoreAppApp.swift */; };
 		84BC551028BA374E003FAE8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BC550F28BA374E003FAE8F /* Assets.xcassets */; };
 		84BC551328BA374E003FAE8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BC551228BA374E003FAE8F /* Preview Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		8427F21628C1EAF4001347B2 /* ColorScrollItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorScrollItem.swift; sourceTree = "<group>"; };
 		84A25AC228C1F21E003242FD /* HotSaleSlider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotSaleSlider.swift; sourceTree = "<group>"; };
 		84A25AC428C1F4F7003242FD /* CapacityScrollItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacityScrollItem.swift; sourceTree = "<group>"; };
+		84A25AC628C4DD3E003242FD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HexColorExtension.swift; path = ../../../../../HexColorExtension.swift; sourceTree = "<group>"; };
 		84BC550828BA3734003FAE8F /* PhoneStoreApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneStoreApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BC550B28BA3734003FAE8F /* PhoneStoreAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneStoreAppApp.swift; sourceTree = "<group>"; };
 		84BC550F28BA374E003FAE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				84D340E828BE5BBC00977A8C /* Constants.swift */,
+				84A25AC628C4DD3E003242FD /* HexColorExtension.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				8427F21328C1E9BB001347B2 /* SelectionScrollView.swift in Sources */,
 				84D340D428BA4EA900977A8C /* GridView.swift in Sources */,
 				84D340E628BCFCE500977A8C /* HotSaleItem.swift in Sources */,
+				84A25AC728C4DD3E003242FD /* HexColorExtension.swift in Sources */,
 				84D340E028BA5E7F00977A8C /* NetworkManager.swift in Sources */,
 				84BC553628BA3B55003FAE8F /* ExplorerView.swift in Sources */,
 				84D340EF28BE693A00977A8C /* CategoryItem.swift in Sources */,

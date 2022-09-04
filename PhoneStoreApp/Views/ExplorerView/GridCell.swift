@@ -63,7 +63,7 @@ extension GridCell {
                 .fontWeight(.bold)
                 .lineLimit(1)
                 .minimumScaleFactor(0.5)
-                .foregroundColor(K.Colors.darkBlue)
+                .foregroundColor(Color(K.Colors.darkBlue))
         }
     }
     
@@ -91,7 +91,7 @@ extension GridCell {
                 .fontWeight(.light)
                 .lineLimit(1)
                 .minimumScaleFactor(0.3)
-                .foregroundColor(K.Colors.darkBlue)
+                .foregroundColor(Color(K.Colors.darkBlue))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -141,7 +141,7 @@ extension GridCell {
                         .resizable()
                         .scaledToFit()
                         .frame(width: iconFrame, height: iconFrame)
-                        .foregroundColor(K.Colors.orange)
+                        .foregroundColor(Color(K.Colors.orange))
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)

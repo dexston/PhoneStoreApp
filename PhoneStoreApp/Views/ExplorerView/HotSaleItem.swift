@@ -92,7 +92,7 @@ extension HotSaleItem {
         var body: some View {
             ZStack {
                 Circle()
-                    .fill(K.Colors.orange)
+                    .fill(Color(K.Colors.orange))
                     .frame(width: height, height: height)
                 Text("New")
                     .font(.caption)
@@ -121,7 +121,7 @@ extension HotSaleItem {
             }
             .frame(width: width)
             .background(.white)
-            .foregroundColor(K.Colors.darkBlue)
+            .foregroundColor(Color(K.Colors.darkBlue))
             .cornerRadius(K.CornerRadius.HotSaleItem.buyButton)
         }
     }

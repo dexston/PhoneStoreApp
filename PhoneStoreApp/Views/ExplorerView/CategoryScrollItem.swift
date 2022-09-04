@@ -30,7 +30,7 @@ struct CategoryScrollItem: View {
             VStack {
                 ZStack {
                     Circle()
-                        .fill(item.isSelected ? K.Colors.orange : .white)
+                        .fill(item.isSelected ? Color(K.Colors.orange) : .white)
                         .frame(width: circleFrame, height: circleFrame)
                         .shadow(color: .secondary.opacity(0.3), radius: 5)
                     Image(systemName: item.icon)
@@ -41,7 +41,7 @@ struct CategoryScrollItem: View {
                 }
                 Text(item.title)
                     .font(.footnote)
-                    .foregroundColor(item.isSelected ? K.Colors.orange : K.Colors.darkBlue)
+                    .foregroundColor(item.isSelected ? Color(K.Colors.orange) : Color(K.Colors.darkBlue))
                     .frame(height: titleHeight)
             }
         }

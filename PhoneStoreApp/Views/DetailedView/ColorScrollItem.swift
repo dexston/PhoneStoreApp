@@ -24,7 +24,7 @@ struct ColorScrollItem: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(K.Colors.orange)
+                    .fill(Color(hex: item))
                     .frame(width: height, height: height)
                     .shadow(color: .secondary.opacity(0.3), radius: 5)
                 Image(systemName: "checkmark")

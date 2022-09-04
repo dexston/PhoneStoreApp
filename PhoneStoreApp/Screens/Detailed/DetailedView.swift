@@ -35,7 +35,7 @@ struct DetailedView: View {
                 }
                 ToolbarItem(placement: .principal) {
                     Text("Product Details")
-                        .foregroundColor(K.Colors.darkBlue)
+                        .foregroundColor(Color(K.Colors.darkBlue))
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavBarCartButton {
@@ -116,7 +116,7 @@ extension DetailedView {
                 .fontWeight(.bold)
                 .lineLimit(2)
                 .minimumScaleFactor(0.5)
-                .foregroundColor(K.Colors.darkBlue)
+                .foregroundColor(Color(K.Colors.darkBlue))
         }
     }
     
@@ -136,7 +136,7 @@ extension DetailedView {
             } label: {
                 ZStack {
                     RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.likeButton)
-                        .fill(K.Colors.darkBlue)
+                        .fill(Color(K.Colors.darkBlue))
                         .aspectRatio(1, contentMode: .fill)
                         .frame(width: height, height: height)
                     Image(systemName: isLiked ? "heart.fill" : "heart")
@@ -190,7 +190,7 @@ extension DetailedView {
             Text("Select color and capacity")
                 .font(.body)
                 .minimumScaleFactor(0.5)
-                .foregroundColor(K.Colors.darkBlue)
+                .foregroundColor(Color(K.Colors.darkBlue))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
     }
@@ -217,7 +217,7 @@ extension DetailedView {
                 .frame(height: height)
                 .padding(.vertical, K.Paddings.DetailedView.addToCartButtonText)
             }
-            .background(K.Colors.orange)
+            .background(Color(K.Colors.orange))
             .foregroundColor(.white)
             .cornerRadius(K.CornerRadius.DetailedView.addToCartButton)
             .frame(maxWidth: .infinity)

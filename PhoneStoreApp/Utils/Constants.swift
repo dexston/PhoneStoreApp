@@ -11,8 +11,8 @@ import SwiftUI
 struct K {
     
     struct Colors {
-        static let darkBlue = Color(uiColor: UIColor(red: 0.00, green: 0.00, blue: 0.21, alpha: 1.00)) //#010035
-        static let orange = Color(uiColor: UIColor(red: 1.00, green: 0.43, blue: 0.31, alpha: 1.00))   //#FF6E4E
+        static let darkBlue = "DarkBlue" //#010035
+        static let orange = "Orange"     //#FF6E4E
     }
     
     enum CornerRadius {
