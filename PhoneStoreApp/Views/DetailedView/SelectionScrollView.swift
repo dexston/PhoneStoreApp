@@ -20,11 +20,12 @@ struct SelectionScrollView<Content: View>: View {
     var body: some View {
         
         let rows: [GridItem] = Array(repeating: GridItem(.flexible()), count: K.Values.selectionLines)
-        
-        ScrollView(.horizontal, showsIndicators: false) {
-            LazyHGrid(rows: rows, alignment: .center) {
-                ForEach(data, id: \.self) { item in
-                    self.itemViewBuilder(item)
+        VStack {
+            ScrollView(.horizontal, showsIndicators: false) {
+                LazyHGrid(rows: rows, alignment: .center) {
+                    ForEach(data, id: \.self) { item in
+                        self.itemViewBuilder(item)
+                    }
                 }
             }
         }

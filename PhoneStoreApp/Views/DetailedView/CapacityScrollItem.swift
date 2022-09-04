@@ -10,7 +10,6 @@ import SwiftUI
 struct CapacityScrollItem: View {
     
     let value: String
-    let height: CGFloat
     let selectedCapacity: String
     let action: (String) -> ()
     
@@ -20,14 +19,13 @@ struct CapacityScrollItem: View {
         } label: {
             Text(value + " GB")
                 .font(.subheadline)
-                .minimumScaleFactor(0.5)
-                .padding(.horizontal)
-                .padding(.vertical, K.Paddings.DetailedView.capacityScrollItem)
+                .minimumScaleFactor(0.8)
+                .padding(.horizontal, K.Paddings.DetailedView.CapacityScrollItem.horizontal)
+                .padding(.vertical, K.Paddings.DetailedView.CapacityScrollItem.vertical)
         }
         .background(Color(K.Colors.orange).opacity(value == selectedCapacity ? 1.0 : .zero))
         .foregroundColor(value == selectedCapacity ? .white : .secondary)
         .cornerRadius(K.CornerRadius.DetailedView.capacityScrollItem)
-        .frame(height: height)
     }
 }
 

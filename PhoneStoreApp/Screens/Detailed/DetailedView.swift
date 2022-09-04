@@ -16,36 +16,28 @@ struct DetailedView: View {
     @StateObject var viewModel = DetailedViewModel()
     
     var body: some View {
-        GeometryReader { geometry in
-            
-            let frame = geometry.frame(in: .global)
-            let detailsHeight = frame.height * 0.6
-            
-            VStack {
-                VStack {
-                    //There will be images
-                }
-                .frame(height: frame.height * 0.4)
-                setupDetails(height: detailsHeight)
+        VStack(spacing: .zero) {
+            ImageCarousel(data: viewModel.phoneDetails)
+            setupDetails()
+        }
+        .shadow(color: .secondary.opacity(0.4), radius: 10)
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                NavBarBackButton(action: dismiss)
             }
-            .navigationBarBackButtonHidden(true)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    NavBarBackButton(action: dismiss)
-                }
-                ToolbarItem(placement: .principal) {
-                    Text("Product Details")
-                        .foregroundColor(Color(K.Colors.darkBlue))
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    NavBarCartButton {
-                        tabSelection = .cart
-                    }
+            ToolbarItem(placement: .principal) {
+                Text("Product Details")
+                    .foregroundColor(Color(K.Colors.darkBlue))
+            }
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavBarCartButton {
+                    tabSelection = .cart
                 }
             }
-            .task {
-                await viewModel.loadPhoneDetails()
-            }
+        }
+        .task {
+            await viewModel.loadPhoneDetails()
         }
     }
 }
@@ -58,47 +50,36 @@ struct DetailedView: View {
 
 extension DetailedView {
     
-    @ViewBuilder func setupDetails(height: CGFloat) -> some View {
+    @ViewBuilder func setupDetails() -> some View {
         if let phoneDetails = viewModel.phoneDetails {
-            let likeButtonHeight = height * 0.1
-            let ratingHeight = height * 0.08
-            let detailsTabViewHeight = height * 0.35
-            let selectionBlockHeight = height * 0.1
-            let addButtonHeight = height * 0.08
-            ScrollView(showsIndicators: false) {
-                VStack {
-                    HStack {
-                        DeviceTitle(title: phoneDetails.title)
-                        Spacer()
-                        LikeButton(isLiked: phoneDetails.isFavorites, height: likeButtonHeight) {
-                            print("Like pressed")
-                        }
+            VStack {
+                HStack {
+                    DeviceTitle(title: phoneDetails.title)
+                    Spacer()
+                    LikeButton(isLiked: phoneDetails.isFavorites) {
+                        print("Like pressed")
                     }
-                    .frame(height: likeButtonHeight)
-                    StarsRating(value: phoneDetails.rating, height: ratingHeight)
-                    DetailsTabView(phoneDetails: phoneDetails, height: detailsTabViewHeight)
-                    SelectionTitle()
-                    HStack {
-                        SelectionScrollView(data: phoneDetails.color) { color in
-                            ColorScrollItem(item: color,
-                                            height: selectionBlockHeight,
-                                            selectedColor: viewModel.selectedColor,
-                                            action: { color in viewModel.selectedColor = color })
-                        }
-                        SelectionScrollView(data: phoneDetails.capacity) { capacity in
-                            CapacityScrollItem(value: capacity,
-                                               height: selectionBlockHeight,
-                                               selectedCapacity: viewModel.selectedCapacity,
-                                               action: { capacity in viewModel.selectedCapacity = capacity })
-                        }
-                    }
-                    AddToCartButton(price: phoneDetails.price, height: addButtonHeight)
                 }
-                .padding(K.Paddings.DetailedView.infoBlock)
+                StarsRating(value: phoneDetails.rating)
+                DetailsTabView(data: phoneDetails)
+                SelectionTitle()
+                HStack {
+                    SelectionScrollView(data: phoneDetails.color) { color in
+                        ColorScrollItem(item: color,
+                                        selectedColor: viewModel.selectedColor,
+                                        action: { color in viewModel.selectedColor = color })
+                    }
+                    SelectionScrollView(data: phoneDetails.capacity) { capacity in
+                        CapacityScrollItem(value: capacity,
+                                           selectedCapacity: viewModel.selectedCapacity,
+                                           action: { capacity in viewModel.selectedCapacity = capacity })
+                    }
+                }
+                AddToCartButton(price: phoneDetails.price)
             }
+            .padding(K.Paddings.DetailedView.infoBlock)
             .background(.white)
             .cornerRadius(K.CornerRadius.DetailedView.infoBlock)
-            .shadow(color: .secondary.opacity(0.4), radius: 10)
         }  else {
             ProgressView()
                 .progressViewStyle(.circular)
@@ -115,7 +96,7 @@ extension DetailedView {
                 .font(.title2)
                 .fontWeight(.bold)
                 .lineLimit(2)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.8)
                 .foregroundColor(Color(K.Colors.darkBlue))
         }
     }
@@ -123,28 +104,19 @@ extension DetailedView {
     struct LikeButton: View {
         
         let isLiked: Bool
-        let height: CGFloat
         let action: () -> ()
-    
-        var iconFrame: CGFloat {
-            height * 0.5
-        }
         
         var body: some View {
             Button {
                 action()
             } label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.likeButton)
-                        .fill(Color(K.Colors.darkBlue))
-                        .aspectRatio(1, contentMode: .fill)
-                        .frame(width: height, height: height)
-                    Image(systemName: isLiked ? "heart.fill" : "heart")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: iconFrame)
-                        .foregroundColor(.white)
-                }
+                Image(systemName: isLiked ? "heart.fill" : "heart")
+                    .imageScale(.medium)
+                    .foregroundColor(.white)
+                    .padding(K.Paddings.DetailedView.likeButton)
+                    .background(RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.likeButton)
+                                    .fill(Color(K.Colors.darkBlue))
+                                    .aspectRatio(1, contentMode: .fit))
             }
         }
     }
@@ -152,7 +124,6 @@ extension DetailedView {
     struct StarsRating: View {
         
         let value: Double
-        let height: CGFloat
         
         var body: some View {
             HStack {
@@ -163,7 +134,9 @@ extension DetailedView {
                 }
                 Spacer()
             }
+            .padding(.bottom, K.Paddings.DetailedView.ratingBottom)
         }
+        
         func starCounter() -> [String] {
             var tempValue = value
             var result = Array(repeating: "star.fill", count: Int(tempValue.rounded(.down)))
@@ -189,7 +162,7 @@ extension DetailedView {
         var body: some View {
             Text("Select color and capacity")
                 .font(.body)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.8)
                 .foregroundColor(Color(K.Colors.darkBlue))
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
@@ -198,7 +171,6 @@ extension DetailedView {
     struct AddToCartButton: View {
         
         let price: Int
-        let height: CGFloat
         
         var body: some View {
             Button {
@@ -207,14 +179,13 @@ extension DetailedView {
                 HStack {
                     Text("Add to cart")
                         .fontWeight(.heavy)
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity)
                     Text("$\(price)")
                         .fontWeight(.heavy)
-                        .minimumScaleFactor(0.5)
+                        .minimumScaleFactor(0.8)
                         .frame(maxWidth: .infinity)
                 }
-                .frame(height: height)
                 .padding(.vertical, K.Paddings.DetailedView.addToCartButtonText)
             }
             .background(Color(K.Colors.orange))

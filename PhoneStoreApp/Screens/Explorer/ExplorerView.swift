@@ -136,6 +136,7 @@ extension ExplorerView {
                         .font(.callout)
                         .foregroundColor(Color(K.Colors.orange))
                 }
+                
             }
             .padding(.horizontal, K.Paddings.ExplorerView.blockTitle)
         }

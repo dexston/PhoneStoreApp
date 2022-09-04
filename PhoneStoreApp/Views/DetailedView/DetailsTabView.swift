@@ -11,25 +11,17 @@ struct DetailsTabView: View {
     
     @State var tabSelector: DetailsTabType = .shop
     
-    let phoneDetails: PhoneDetails
-    let height: CGFloat
-    
-    var tabHeight: CGFloat {
-        height * 0.2
-    }
-    var specInfoHeight: CGFloat {
-        height * 0.7
-    }
+    let data: PhoneDetails
     
     var body: some View {
         VStack {
             HStack {
-                DetailsTabTitle(type: .shop, height: tabHeight, tabSelector: $tabSelector)
-                DetailsTabTitle(type: .details, height: tabHeight, tabSelector: $tabSelector)
-                DetailsTabTitle(type: .features, height: tabHeight, tabSelector: $tabSelector)
+                DetailsTabTitle(type: .shop, tabSelector: $tabSelector)
+                DetailsTabTitle(type: .details, tabSelector: $tabSelector)
+                DetailsTabTitle(type: .features, tabSelector: $tabSelector)
             }
             TabView(selection: $tabSelector) {
-                SpecInfo(phoneDetails: phoneDetails, height: specInfoHeight)
+                SpecInfo(data: data)
                     .tag(DetailsTabType.shop)
                 Text("There is some details of the phone")
                     .tag(DetailsTabType.details)
@@ -38,7 +30,6 @@ struct DetailsTabView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
-        .frame(height: height)
     }
 }
 
@@ -49,6 +40,7 @@ struct DetailsTabView: View {
 //}
 
 extension DetailsTabView {
+    
     enum DetailsTabType: String {
         case shop
         case details
@@ -58,34 +50,23 @@ extension DetailsTabView {
     struct DetailsTabTitle: View {
         
         let type: DetailsTabType
-        let height: CGFloat
         @Binding var tabSelector: DetailsTabType
-        
-        var textHeight: CGFloat {
-            height * 0.9
-        }
-        var lineHeight: CGFloat {
-            height * 0.1
-        }
         
         var body: some View {
             Button {
                 tabSelector = type
             } label: {
-                VStack(spacing: .zero) {
+                VStack(spacing: K.Spacings.DetailedView.tabUnderline) {
                     Text("\(type.rawValue.localizedCapitalized)")
                         .foregroundColor(isActive() ? Color(K.Colors.darkBlue) : .secondary)
                         .fontWeight(isActive() ? .bold : .regular)
-                        .minimumScaleFactor(0.5)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: textHeight)
+                        .minimumScaleFactor(0.8)
                     RoundedRectangle(cornerRadius: K.CornerRadius.DetailedView.specInfoTabLine)
                         .fill(Color(K.Colors.orange).opacity(isActive() ? 1.0 : .zero))
-                        .frame(height: lineHeight)
-                        .frame(maxWidth: .infinity)
+                        .frame(height: K.Values.detailsTabUnderline)
                 }
+                .frame(maxWidth: .infinity)
             }
-            .frame(height: height)
         }
         func isActive() -> Bool {
             type == tabSelector
@@ -94,15 +75,14 @@ extension DetailsTabView {
     
     struct SpecInfo: View {
         
-        let phoneDetails: PhoneDetails
-        let height: CGFloat
+        let data: PhoneDetails
         
         var body: some View {
-            HStack(alignment: .top, spacing: .zero) {
-                SpecItem(icon: "cpu", text: phoneDetails.CPU, height: height)
-                SpecItem(icon: "camera", text: phoneDetails.camera, height: height)
-                SpecItem(icon: "memorychip", text: phoneDetails.ssd, height: height)
-                SpecItem(icon: "sdcard", text: phoneDetails.sd, height: height)
+            HStack(alignment: .bottom, spacing: .zero) {
+                SpecItem(icon: "cpu", text: data.CPU)
+                SpecItem(icon: "camera", text: data.camera)
+                SpecItem(icon: "memorychip", text: data.ssd)
+                SpecItem(icon: "sdcard", text: data.sd)
             }
         }
         
@@ -110,21 +90,12 @@ extension DetailsTabView {
             
             let icon: String
             let text: String
-            let height: CGFloat
-            
-            var iconHeight: CGFloat {
-                height * 0.3
-            }
-            var textHeight: CGFloat {
-                height * 0.2
-            }
             
             var body: some View {
                 VStack {
                     Image(systemName: icon)
                         .resizable()
                         .scaledToFit()
-                        .frame(height: iconHeight)
                         .foregroundColor(.secondary)
                     Text(text)
                         .font(.footnote)

@@ -16,15 +16,13 @@ struct NavBarBackButton: View {
         Button {
             action()
         } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
-                    .fill(Color(K.Colors.darkBlue))
-                    .aspectRatio(1, contentMode: .fill)
-                Image(systemName: "chevron.backward")
-                    .imageScale(.medium)
-                    .foregroundColor(.white)
-                    .padding(K.Paddings.navBarButton)
-            }
+            Image(systemName: "chevron.backward")
+                .imageScale(.large)
+                .foregroundColor(.white)
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
+                                .fill(Color(K.Colors.darkBlue))
+                                .aspectRatio(1, contentMode: .fit))
         }
     }
 }
@@ -37,15 +35,13 @@ struct NavBarCartButton: View {
         Button {
             action()
         } label: {
-            ZStack {
-                RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
-                    .fill(Color(K.Colors.orange))
-                    .aspectRatio(1, contentMode: .fill)
-                Image(systemName: "bag")
-                    .imageScale(.medium)
-                    .foregroundColor(.white)
-                    .padding(K.Paddings.navBarButton)
-            }
+            Image(systemName: "bag")
+                .imageScale(.medium)
+                .foregroundColor(.white)
+                .padding(10)
+                .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
+                                .fill(Color(K.Colors.orange))
+                                .aspectRatio(1, contentMode: .fit))
         }
     }
 }

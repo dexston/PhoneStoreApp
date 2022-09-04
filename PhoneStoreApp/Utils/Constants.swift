@@ -22,6 +22,7 @@ struct K {
             static let buyButton: CGFloat = 8
         }
         enum DetailedView {
+            static let imageBlock: CGFloat = 20
             static let infoBlock: CGFloat = 30
             static let likeButton: CGFloat = 10
             static let addToCartButton: CGFloat = 15
@@ -52,7 +53,14 @@ struct K {
             static let infoBlock: CGFloat = 20
             static let addToCartButtonText: CGFloat = 15
             static let addToCartButton: CGFloat = 15
-            static let capacityScrollItem: CGFloat = 5
+            static let colorCircle: CGFloat = 10
+            static let likeButton: CGFloat = 10
+            static let ratingBottom: CGFloat = 5
+            enum CapacityScrollItem {
+                static let vertical: CGFloat = 5
+                static let horizontal: CGFloat = 10
+            }
+            
         }
     }
     
@@ -65,12 +73,16 @@ struct K {
                 static let content: CGFloat = 10
             }
         }
+        enum DetailedView {
+            static let tabUnderline: CGFloat = 5
+        }
     }
     
     enum Values {
         static let selectionLines: Int = 1
         static let categoriesLines: Int = 1
         static let gridCols: Int = 2
+        static let detailsTabUnderline: CGFloat = 3
     }
     
     enum MainViewTabs {

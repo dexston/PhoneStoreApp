@@ -26,7 +26,7 @@ struct PhoneDetails: Decodable {
     let camera: String
     let capacity: [String]
     let color: [String]
-    let images: [String]
+    let images: [URL]
     let isFavorites: Bool
     let price: Int
     let rating: Double
