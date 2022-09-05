@@ -10,7 +10,7 @@ import SwiftUI
 
 struct K {
     
-    struct Colors {
+    enum Colors {
         static let darkBlue = "DarkBlue" //#010035
         static let orange = "Orange"     //#FF6E4E
     }

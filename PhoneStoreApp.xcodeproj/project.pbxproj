@@ -13,6 +13,7 @@
 		84A25AC528C1F4F7003242FD /* CapacityScrollItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25AC428C1F4F7003242FD /* CapacityScrollItem.swift */; };
 		84A25ACA28C4E5BF003242FD /* HexColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25AC928C4E5BF003242FD /* HexColorExtension.swift */; };
 		84A25ACC28C4E6DD003242FD /* ImageCarousel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25ACB28C4E6DD003242FD /* ImageCarousel.swift */; };
+		84A25ACE28C5DB31003242FD /* DetailedViewExts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84A25ACD28C5DB31003242FD /* DetailedViewExts.swift */; };
 		84BC550C28BA3734003FAE8F /* PhoneStoreAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84BC550B28BA3734003FAE8F /* PhoneStoreAppApp.swift */; };
 		84BC551028BA374E003FAE8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BC550F28BA374E003FAE8F /* Assets.xcassets */; };
 		84BC551328BA374E003FAE8F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84BC551228BA374E003FAE8F /* Preview Assets.xcassets */; };
@@ -47,6 +48,7 @@
 		84A25AC428C1F4F7003242FD /* CapacityScrollItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacityScrollItem.swift; sourceTree = "<group>"; };
 		84A25AC928C4E5BF003242FD /* HexColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexColorExtension.swift; sourceTree = "<group>"; };
 		84A25ACB28C4E6DD003242FD /* ImageCarousel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCarousel.swift; sourceTree = "<group>"; };
+		84A25ACD28C5DB31003242FD /* DetailedViewExts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedViewExts.swift; sourceTree = "<group>"; };
 		84BC550828BA3734003FAE8F /* PhoneStoreApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhoneStoreApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84BC550B28BA3734003FAE8F /* PhoneStoreAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneStoreAppApp.swift; sourceTree = "<group>"; };
 		84BC550F28BA374E003FAE8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -212,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				84BC552A28BA39CB003FAE8F /* DetailedView.swift */,
+				84A25ACD28C5DB31003242FD /* DetailedViewExts.swift */,
 				84BC552C28BA39D9003FAE8F /* DetailedViewModel.swift */,
 			);
 			path = Detailed;
@@ -330,6 +333,7 @@
 				84D340F128BF86FA00977A8C /* NavBarCustomViews.swift in Sources */,
 				84BC552B28BA39CB003FAE8F /* DetailedView.swift in Sources */,
 				84D340E228BA5EC800977A8C /* URLManager.swift in Sources */,
+				84A25ACE28C5DB31003242FD /* DetailedViewExts.swift in Sources */,
 				84BC550C28BA3734003FAE8F /* PhoneStoreAppApp.swift in Sources */,
 				84D340F328C0ACEF00977A8C /* DetailsTabView.swift in Sources */,
 				84A25AC528C1F4F7003242FD /* CapacityScrollItem.swift in Sources */,
