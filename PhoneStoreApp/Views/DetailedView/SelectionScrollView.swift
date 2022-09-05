@@ -24,7 +24,7 @@ struct SelectionScrollView<Content: View>: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHGrid(rows: rows, alignment: .center) {
                     ForEach(data, id: \.self) { item in
-                        self.itemViewBuilder(item)
+                        itemViewBuilder(item)
                     }
                 }
             }

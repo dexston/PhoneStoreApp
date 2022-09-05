@@ -13,17 +13,17 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $viewModel.tabSelection) {
-            ExplorerView(tabSelection: $viewModel.tabSelection)
+            ExplorerView()
                 .tabItem {
                     Label("Explorer", systemImage: "xmark")
                 }
                 .tag(K.MainViewTabs.explorer)
-            CartView()
-                .tabItem {
-                    Label("Cart", systemImage: "cart")
-                }
-                .badge(5)
-                .tag(K.MainViewTabs.cart)
+            //CartView()
+             //   .tabItem {
+             //       Label("Cart", systemImage: "cart")
+             //   }
+             //   .badge(5)
+             //   .tag(K.MainViewTabs.cart)
         }
     }
 }

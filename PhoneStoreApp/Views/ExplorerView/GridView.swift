@@ -24,7 +24,7 @@ struct GridView<Content: View>: View {
         
         LazyVGrid(columns: columns, alignment: .leading, spacing: K.Spacings.ExplorerView.GridCell.content) {
             ForEach(data, id: \.id) { item in
-                self.cellViewBuilder(item)
+                cellViewBuilder(item)
             }
         }
         .padding(.horizontal, K.Paddings.ExplorerView.grid)

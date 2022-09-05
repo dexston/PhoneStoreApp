@@ -11,33 +11,36 @@ struct DetailedView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var tabSelection: K.MainViewTabs
+    @Binding var cartViewModel: CartViewModel
     
     @StateObject var viewModel = DetailedViewModel()
     
     var body: some View {
-        VStack(spacing: .zero) {
-            ImageCarousel(data: viewModel.phoneDetails)
-            setupDetails()
-        }
-        .shadow(color: .secondary.opacity(0.4), radius: 10)
-        .navigationBarBackButtonHidden(true)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                NavBarBackButton(action: dismiss)
+        GeometryReader { geometry in
+            let frame = geometry.frame(in: .global)
+            VStack(spacing: .zero) {
+                ImageCarousel(data: viewModel.phoneDetails)
+                    .frame(maxHeight: frame.height * 0.45)
+                setupDetails()
             }
-            ToolbarItem(placement: .principal) {
-                Text("Product Details")
-                    .foregroundColor(Color(K.Colors.darkBlue))
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavBarCartButton {
-                    tabSelection = .cart
+            .edgesIgnoringSafeArea(.bottom)
+            .shadow(color: .secondary.opacity(0.4), radius: 10)
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    NavBarBackButton(action: dismiss)
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("Product Details")
+                        .foregroundColor(Color(K.Colors.darkBlue))
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavBarCartButton(cartViewModel: $cartViewModel)
                 }
             }
-        }
-        .task {
-            await viewModel.loadPhoneDetails()
+            .task {
+                await viewModel.loadPhoneDetails()
+            }
         }
     }
 }

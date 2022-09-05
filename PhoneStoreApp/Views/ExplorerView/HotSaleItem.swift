@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HotSaleItem: View {
     
-    @Binding var tabSelection: K.MainViewTabs
+    @Binding var cartViewModel: CartViewModel
     
     let item: HotSale
     let height: CGFloat
@@ -23,7 +23,7 @@ struct HotSaleItem: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
+        NavigationLink(destination: DetailedView(cartViewModel: $cartViewModel)) {
             ZStack {
                 BackdropImage(url: item.picture, height: height)
                 VStack(alignment: .leading) {

@@ -29,12 +29,10 @@ struct NavBarBackButton: View {
 
 struct NavBarCartButton: View {
     
-    let action: () -> ()
+    @Binding var cartViewModel: CartViewModel
     
     var body: some View {
-        Button {
-            action()
-        } label: {
+        NavigationLink(destination: CartView(viewModel: $cartViewModel)) {
             Image(systemName: "bag")
                 .imageScale(.medium)
                 .foregroundColor(.white)
@@ -42,6 +40,42 @@ struct NavBarCartButton: View {
                 .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
                                 .fill(Color(K.Colors.orange))
                                 .aspectRatio(1, contentMode: .fit))
+        }
+    }
+}
+
+struct NavBarAddressButton: View {
+    
+    let action: () -> ()
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Label {
+                Text("Add address")
+                    .font(.body)
+                    .minimumScaleFactor(0.8)
+                    .foregroundColor(Color(K.Colors.darkBlue))
+            } icon: {
+                Image(systemName: "map")
+                    .imageScale(.medium)
+                    .foregroundColor(.white)
+                    .padding(10)
+                    .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
+                                    .fill(Color(K.Colors.orange))
+                                    .aspectRatio(1, contentMode: .fit))
+            }
+            .labelStyle(RightSideIcon())
+        }
+    }
+    
+    struct RightSideIcon: LabelStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            HStack {
+                configuration.title
+                configuration.icon
+            }
         }
     }
 }
