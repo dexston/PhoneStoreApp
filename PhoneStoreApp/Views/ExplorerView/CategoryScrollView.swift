@@ -10,8 +10,6 @@ import SwiftUI
 struct CategoryScrollView<Content: View>: View {
     
     let data: [CategoryItem]
-    let lines: Int = 1
-    let spacing: CGFloat = 20
     let itemViewBuilder: (CategoryItem) -> Content
     
     init(data: [CategoryItem], itemViewBuilder: @escaping (CategoryItem) -> Content) {
@@ -20,21 +18,17 @@ struct CategoryScrollView<Content: View>: View {
     }
     
     var body: some View {
-        ScrollView(.horizontal) {
-            self.setupCategories()
-                .padding(.vertical, spacing / 2)
-                .padding(.horizontal, spacing)
-        }
-    }
-    
-    func setupCategories() -> some View {
         
-        let rows: [GridItem] = Array(repeating: GridItem(.flexible(), alignment: .leading), count: lines)
+        let rows: [GridItem] = Array(repeating: GridItem(.flexible(), alignment: .leading),
+                                     count: K.Values.categoriesLines)
         
-        return LazyHGrid(rows: rows, alignment: .top, spacing: spacing) { 
-            ForEach(data, id: \.id) { item in
-                self.itemViewBuilder(item)
+        ScrollView(.horizontal, showsIndicators: false) {
+            LazyHGrid(rows: rows, alignment: .top, spacing: K.Spacings.ExplorerView.categoryItem) {
+                ForEach(data, id: \.id) { item in
+                    itemViewBuilder(item)
+                }
             }
+            .padding(.horizontal, K.Paddings.ExplorerView.categoriesBlock)
         }
     }
 }

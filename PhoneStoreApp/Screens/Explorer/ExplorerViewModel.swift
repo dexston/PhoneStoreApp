@@ -16,14 +16,13 @@ class ExplorerViewModel: ObservableObject {
     @Published var hotSaleItems: [HotSale] = []
     
     @Published var categories: [CategoryItem] = []
-    @Published var currentCategory: Int = 0 {
+    private var currentCategory: Int = 1 {
         didSet {
             markCategoryAsSelected()
         }
     }
 
     init() {
-        networkManager.delegate = self
         categories = [
             CategoryItem(id: 1, icon: "iphone", title: "Phones"),
             CategoryItem(id: 2, icon: "desktopcomputer", title: "Computers"),
@@ -32,14 +31,20 @@ class ExplorerViewModel: ObservableObject {
             CategoryItem(id: 5, icon: "music.note", title: "Music"),
             CategoryItem(id: 6, icon: "gamecontroller", title: "Games")
         ]
-        currentCategory = 1
+        markCategoryAsSelected()
     }
     
-    func loadContent() async {
-        await networkManager.fetchHomeStore()
+    @MainActor func loadContent() async {
+        do {
+            let result = try await networkManager.fetchHomeStore()
+            bestSellerItems = result.bestSeller
+            hotSaleItems = result.homeStore
+        } catch {
+            print(error)
+        }
     }
     
-    func markCategoryAsSelected() {
+    private func markCategoryAsSelected() {
         categories.indices.forEach { i in
             categories[i].isSelected = categories[i].id == currentCategory
         }
@@ -48,21 +53,5 @@ class ExplorerViewModel: ObservableObject {
     func categorySelected(id: Int) {
         currentCategory = id
     }
-    
 }
 
-extension ExplorerViewModel: NetworkManagerDelegate {
-    func didBestSellerUpdate(data: [Phone]) {
-        bestSellerItems = data
-    }
-    
-    func didHotSalesUpdate(data: [HotSale]) {
-        hotSaleItems = data
-    }
-    
-    func didFailWithError(error: Error) {
-        print(error.localizedDescription)
-    }
-    
-    
-}

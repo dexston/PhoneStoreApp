@@ -8,16 +8,22 @@
 import SwiftUI
 
 struct MainView: View {
+    
+    @StateObject var viewModel = MainViewModel()
+    
     var body: some View {
-        TabView {
-            ExplorerView()
+        TabView(selection: $viewModel.tabSelection) {
+            ExplorerView(tabSelection: $viewModel.tabSelection)
                 .tabItem {
                     Label("Explorer", systemImage: "xmark")
                 }
+                .tag(K.MainViewTabs.explorer)
             CartView()
                 .tabItem {
                     Label("Cart", systemImage: "cart")
                 }
+                .badge(5)
+                .tag(K.MainViewTabs.cart)
         }
     }
 }

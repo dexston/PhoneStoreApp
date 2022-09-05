@@ -6,3 +6,9 @@
 //
 
 import Foundation
+import SwiftUI
+
+class MainViewModel: ObservableObject {
+    
+    @Published var tabSelection: K.MainViewTabs = .explorer
+}
