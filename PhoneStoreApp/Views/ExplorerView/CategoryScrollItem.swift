@@ -13,25 +13,23 @@ struct CategoryScrollItem: View {
     var height: CGFloat
     let action: (Int) -> ()
     
-    var circleFrame: CGFloat {
-        height * 0.9
-    }
     var iconFrame: CGFloat {
-        circleFrame * 0.5
-    }
-    var titleHeight: CGFloat {
-        height * 0.1
+        height * 0.5
     }
     
     var body: some View {
         Button {
             action(item.id)
         } label: {
-            VStack {
+            Label {
+                Text(item.title)
+                    .font(.footnote)
+                    .foregroundColor(item.isSelected ? Color(K.Colors.orange) : Color(K.Colors.darkBlue))
+            } icon: {
                 ZStack {
                     Circle()
                         .fill(item.isSelected ? Color(K.Colors.orange) : .white)
-                        .frame(width: circleFrame, height: circleFrame)
+                        .frame(width: height, height: height)
                         .shadow(color: .secondary.opacity(0.3), radius: 5)
                     Image(systemName: item.icon)
                         .resizable()
@@ -39,13 +37,19 @@ struct CategoryScrollItem: View {
                         .frame(width: iconFrame, height: iconFrame)
                         .foregroundColor(item.isSelected ? .white : .secondary)
                 }
-                Text(item.title)
-                    .font(.footnote)
-                    .foregroundColor(item.isSelected ? Color(K.Colors.orange) : Color(K.Colors.darkBlue))
-                    .frame(height: titleHeight)
             }
+            .labelStyle(TitleUnderIcon())
         }
         .padding(.vertical, K.Paddings.ExplorerView.categoryItem)
+    }
+    
+    struct TitleUnderIcon: LabelStyle {
+        func makeBody(configuration: Configuration) -> some View {
+            VStack {
+                configuration.icon
+                configuration.title
+            }
+        }
     }
 }
 

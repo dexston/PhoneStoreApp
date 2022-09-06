@@ -42,17 +42,19 @@ struct K {
     
     enum Paddings {
         static let navBarButton: CGFloat = 10
-        enum HotSaleItem {
-            static let wholeBlock: CGFloat = 10
-            static let content: CGFloat = 20
-            static let buyButtonText: CGFloat = 5
-        }
         enum ExplorerView {
             static let grid: CGFloat = 10
             static let blockTitle: CGFloat = 15
             static let categoryItem: CGFloat = 10
             static let categoriesBlock: CGFloat = 20
             static let gridCellLikeButton: CGFloat = 10
+            enum HotSaleItem {
+                static let wholeBlock: CGFloat = 10
+                static let content: CGFloat = 20
+                static let buyButtonTextHorizontal: CGFloat = 5
+                static let buyButtonTextVertical: CGFloat = 25
+                static let newIcon: CGFloat = 10
+            }
         }
         enum DetailedView {
             static let infoBlock: CGFloat = 20

@@ -14,4 +14,20 @@ struct Cart: Decodable {
     var total: Int
     var basket: [BasketItem]
     
+    var quantity: Int {
+        var result = 0
+        basket.forEach { item in
+            result += item.quantity
+        }
+        return result
+    }
+    
+    var totalCost: Int {
+        var result = 0
+        basket.forEach { item in
+            result += item.price * item.quantity
+        }
+        return result
+    }
+    
 }

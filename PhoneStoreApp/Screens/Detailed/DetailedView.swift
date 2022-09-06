@@ -11,7 +11,7 @@ struct DetailedView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @Binding var cartViewModel: CartViewModel
+    @Binding var cart: Cart?
     
     @StateObject var viewModel = DetailedViewModel()
     
@@ -35,7 +35,7 @@ struct DetailedView: View {
                         .foregroundColor(Color(K.Colors.darkBlue))
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavBarCartButton(cartViewModel: $cartViewModel)
+                    NavBarCartButton(setBackground: true, cart: $cart)
                 }
             }
             .task {

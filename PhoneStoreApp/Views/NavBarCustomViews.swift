@@ -19,7 +19,7 @@ struct NavBarBackButton: View {
             Image(systemName: "chevron.backward")
                 .imageScale(.large)
                 .foregroundColor(.white)
-                .padding(10)
+                .padding(K.Paddings.navBarButton)
                 .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
                                 .fill(Color(K.Colors.darkBlue))
                                 .aspectRatio(1, contentMode: .fit))
@@ -29,17 +29,35 @@ struct NavBarBackButton: View {
 
 struct NavBarCartButton: View {
     
-    @Binding var cartViewModel: CartViewModel
+    let setBackground: Bool
+    
+    @Binding var cart: Cart?
     
     var body: some View {
-        NavigationLink(destination: CartView(viewModel: cartViewModel)) {
-            Image(systemName: "bag")
-                .imageScale(.medium)
-                .foregroundColor(.white)
-                .padding(10)
-                .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
-                                .fill(Color(K.Colors.orange))
-                                .aspectRatio(1, contentMode: .fit))
+        NavigationLink(destination: CartView(data: $cart)) {
+            let quantity = cart?.quantity ?? 0
+            Label {
+                Text("\(quantity)")
+                    .font(.callout)
+                    .fontWeight(.light)
+                    .foregroundColor(Color(K.Colors.darkBlue))
+                    .opacity(quantity > 0 ? 1.0 : .zero)
+            } icon: {
+                if setBackground {
+                    Image(systemName: "bag")
+                        .imageScale(.medium)
+                        .foregroundColor(.white)
+                        .padding(K.Paddings.navBarButton)
+                        .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
+                                        .fill(Color(K.Colors.orange))
+                                        .aspectRatio(1, contentMode: .fit))
+                } else {
+                    Image(systemName: "bag")
+                        .imageScale(.large)
+                        .foregroundColor(Color(K.Colors.darkBlue))
+                }
+            }
+            .labelStyle(RightSideIcon())
         }
     }
 }
@@ -54,14 +72,15 @@ struct NavBarAddressButton: View {
         } label: {
             Label {
                 Text("Add address")
-                    .font(.body)
+                    .font(.callout)
+                    .fontWeight(.light)
                     .minimumScaleFactor(0.8)
                     .foregroundColor(Color(K.Colors.darkBlue))
             } icon: {
                 Image(systemName: "map")
                     .imageScale(.medium)
                     .foregroundColor(.white)
-                    .padding(10)
+                    .padding(K.Paddings.navBarButton)
                     .background(RoundedRectangle(cornerRadius: K.CornerRadius.navBarButton)
                                     .fill(Color(K.Colors.orange))
                                     .aspectRatio(1, contentMode: .fit))
@@ -69,13 +88,13 @@ struct NavBarAddressButton: View {
             .labelStyle(RightSideIcon())
         }
     }
-    
-    struct RightSideIcon: LabelStyle {
-        func makeBody(configuration: Configuration) -> some View {
-            HStack {
-                configuration.title
-                configuration.icon
-            }
+}
+
+struct RightSideIcon: LabelStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack {
+            configuration.title
+            configuration.icon
         }
     }
 }
