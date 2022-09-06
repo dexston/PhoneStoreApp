@@ -37,4 +37,15 @@ class NetworkManager {
         return decodedData
     }
     
+    func fetchCartInfo() async throws  -> Cart {
+        guard let url = urlManager.getCartURL() else {
+            throw NetworkErrors.badUrl
+        }
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let decodedData = try decoder.decode(Cart.self, from: data)
+        return decodedData
+    }
+    
 }

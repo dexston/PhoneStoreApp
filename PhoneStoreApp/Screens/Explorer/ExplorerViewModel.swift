@@ -12,6 +12,8 @@ class ExplorerViewModel: ObservableObject {
     
     private let networkManager = NetworkManager()
     
+    @Published var cartViewModel = CartViewModel()
+    
     @Published var bestSellerItems: [Phone] = []
     @Published var hotSaleItems: [HotSale] = []
     

@@ -11,7 +11,7 @@ import SwiftUI
 struct PhoneStoreAppApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            ExplorerView()
         }
     }
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ExplorerView: View {
     
-    @Binding var tabSelection: K.MainViewTabs
     @StateObject var viewModel = ExplorerViewModel()
     
     var body: some View {
@@ -43,6 +42,7 @@ struct ExplorerView: View {
                         //
                         Spacer()
                     }
+                    .edgesIgnoringSafeArea(.bottom)
                 }
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
@@ -69,6 +69,7 @@ struct ExplorerView: View {
                 }
                 .task {
                     await viewModel.loadContent()
+                    await viewModel.cartViewModel.loadCartInfo()
                 }
             }
             .navigationViewStyle(.stack)
@@ -99,7 +100,7 @@ extension ExplorerView {
                 .frame(width: width, height: height, alignment: .center)
         } else {
             HotSaleSlider(items: viewModel.hotSaleItems) { item in
-                HotSaleItem(tabSelection: $tabSelection, item: item, height: height, width: width)
+                HotSaleItem(cartViewModel: $viewModel.cartViewModel, item: item, height: height, width: width)
             }
             .frame(width: width, height: height)
         }
@@ -112,7 +113,7 @@ extension ExplorerView {
                 .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: .infinity, alignment: .center)
         } else {
             GridView(data: data) { phone in
-                GridCell(tabSelection: $tabSelection, item: phone, height: cellHeight)
+                GridCell(cartViewModel: $viewModel.cartViewModel, item: phone, height: cellHeight)
             }
         }
     }

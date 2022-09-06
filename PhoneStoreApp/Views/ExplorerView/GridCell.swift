@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GridCell: View {
     
-    @Binding var tabSelection: K.MainViewTabs
+    @Binding var cartViewModel: CartViewModel
     
     var item: Phone
     var height: CGFloat
@@ -25,7 +25,7 @@ struct GridCell: View {
     }
     
     var body: some View {
-        NavigationLink(destination: DetailedView(tabSelection: $tabSelection)) {
+        NavigationLink(destination: DetailedView(cartViewModel: $cartViewModel)) {
             VStack(alignment: .leading, spacing: .zero) {
                 ZStack {
                     PosterImage(url: item.picture, height: posterHeight)
