@@ -27,7 +27,7 @@ struct CartContentScrollView<Content: View>: View {
                 }
             }
         }
-        .padding([.horizontal, .top], 30)
+        .padding(K.Paddings.CartView.cartContentScrollView)
     }
 }
 

@@ -32,7 +32,7 @@ struct NavBarCartButton: View {
     @Binding var cartViewModel: CartViewModel
     
     var body: some View {
-        NavigationLink(destination: CartView(viewModel: $cartViewModel)) {
+        NavigationLink(destination: CartView(viewModel: cartViewModel)) {
             Image(systemName: "bag")
                 .imageScale(.medium)
                 .foregroundColor(.white)

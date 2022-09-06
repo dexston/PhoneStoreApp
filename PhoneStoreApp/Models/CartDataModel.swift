@@ -10,8 +10,8 @@ import Foundation
 struct Cart: Decodable {
     
     let id: String
-    let delivery: String
-    let total: Int
-    let basket: [BasketItem]
+    var delivery: String
+    var total: Int
+    var basket: [BasketItem]
     
 }

@@ -9,23 +9,24 @@ import SwiftUI
 
 struct QuantitySelector: View {
     
-    let value: Int
+    let item: BasketItem
+    let action: (K.QuantityOperationType) -> Void
      
     var body: some View {
         VStack(spacing: .zero) {
-            QuantityButton(type: .minus) {
-                print("Minus")
+            QuantityButton(type: .minus) { type in
+                action(type)
             }
-            Text("\(value)")
+            Text("\(item.quantity)")
                 .font(.headline)
                 .minimumScaleFactor(0.5)
                 .foregroundColor(.white)
-            QuantityButton(type: .plus) {
-                print("Plus")
+            QuantityButton(type: .plus) { type in
+                action(type)
             }
         }
-        .padding(.horizontal, 10)
-        .padding(.vertical, 5)
+        .padding(.horizontal, K.Paddings.CartView.QuantityCounter.horizontal)
+        .padding(.vertical, K.Paddings.CartView.QuantityCounter.vertical)
         .background(Capsule(style: .circular).fill(.secondary))
     }
 }
@@ -39,24 +40,18 @@ struct QuantitySelector: View {
 
 extension QuantitySelector {
     
-    enum Sign: String {
-        case minus = "-"
-        case plus = "+"
-    }
-    
     struct QuantityButton: View {
         
-        let type: Sign
-        let action: () -> ()
+        let type: K.QuantityOperationType
+        let action: (K.QuantityOperationType) -> Void
         
         var body: some View {
             Button {
-                action()
+                action(type)
             } label: {
                 Text(type.rawValue)
                     .font(.headline)
                     .minimumScaleFactor(0.5)
-                    //.fontWeight(.semibold)
                     .foregroundColor(.white)
             }
         }

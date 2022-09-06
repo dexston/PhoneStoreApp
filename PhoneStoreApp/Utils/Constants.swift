@@ -25,13 +25,18 @@ struct K {
             static let imageBlock: CGFloat = 20
             static let infoBlock: CGFloat = 30
             static let likeButton: CGFloat = 10
-            static let addToCartButton: CGFloat = 15
+            static let addToCartButton: CGFloat = 10
             static let capacityScrollItem: CGFloat = 10
             static let specInfoTabLine: CGFloat = 3
         }
         enum ExplorerView {
             static let gridCell: CGFloat = 15
             static let cornerRadius: CGFloat = 15
+        }
+        enum CartView {
+            static let cartContentScrollItem: CGFloat = 10
+            static let cartContentScrollView: CGFloat = 30
+            static let checkoutButton: CGFloat = 10
         }
     }
     
@@ -60,7 +65,22 @@ struct K {
                 static let vertical: CGFloat = 5
                 static let horizontal: CGFloat = 10
             }
-            
+        }
+        enum CartView {
+            static let title: CGFloat = 30
+            static let cartContentScrollItem: CGFloat = 10
+            static let cartContentScrollView: CGFloat = 30
+            static let checkoutButtonText: CGFloat = 15
+            static let checkoutButton: CGFloat = 30
+            enum CartCostInfo {
+                static let horizontal: CGFloat = 50
+                static let vertcial: CGFloat = 10
+                static let devider: CGFloat = 10
+            }
+            enum QuantityCounter {
+                static let horizontal: CGFloat = 10
+                static let vertical: CGFloat = 5
+            }
         }
     }
     
@@ -76,6 +96,10 @@ struct K {
         enum DetailedView {
             static let tabUnderline: CGFloat = 5
         }
+        enum CartView {
+            static let cartContentScrollItem: CGFloat = 20
+            static let cartCostInfo: CGFloat = 20
+        }
     }
     
     enum Values {
@@ -88,5 +112,11 @@ struct K {
     enum MainViewTabs {
         case explorer
         case cart
+    }
+    
+    enum QuantityOperationType: String {
+        case minus = "-"
+        case plus = "+"
+        case remove
     }
 }

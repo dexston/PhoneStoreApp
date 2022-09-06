@@ -14,4 +14,9 @@ struct BasketItem: Decodable {
     let images: URL
     let title: String
     
+    var quantity: Int = 1
+    
+    private enum CodingKeys: String, CodingKey {
+        case id, price, images, title
+    }
 }

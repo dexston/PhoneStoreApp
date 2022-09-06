@@ -11,24 +11,20 @@ struct CartContentScrollItem: View {
     
     let item: BasketItem
     let imageFrame: CGFloat
-    let actionQuantityMinus: () -> ()
-    let actionQuantityPlus: () -> ()
-    let actionDeleteItem: () -> ()
+    let action: (K.QuantityOperationType) -> Void
     
     var body: some View {
-        HStack(spacing: 20) {
+        HStack(spacing: K.Spacings.CartView.cartContentScrollItem) {
             ImageItem(url: item.images, frame: imageFrame)
             VStack {
                 Title(value: item.title)
-                TotalPrice(value: item.price)
+                TotalPrice(value: item.price * item.quantity)
             }
-            QuantitySelector(value: 5)
-            DeleteButton(item: item) {
-                print("Delete button pressed")
-            }
+            QuantitySelector(item: item, action: action)
+            DeleteButton(item: item, action: action)
         }
         .frame(maxWidth: .infinity, maxHeight: imageFrame)
-        .padding(.vertical, 10)
+        .padding(.vertical, K.Paddings.CartView.cartContentScrollItem)
     }
 }
 
@@ -74,11 +70,11 @@ extension CartContentScrollItem {
     struct DeleteButton: View {
         
         let item: BasketItem
-        let action: () -> ()
+        let action: (K.QuantityOperationType) -> ()
         
         var body: some View {
             Button {
-                action()
+                action(.remove)
             } label: {
                 Image(systemName: "trash")
                     .imageScale(.medium)
@@ -103,7 +99,7 @@ extension CartContentScrollItem {
             }
             .frame(width: frame, height: frame)
             .clipped()
-            .cornerRadius(10)
+            .cornerRadius(K.CornerRadius.CartView.cartContentScrollItem)
         }
     }
 }
