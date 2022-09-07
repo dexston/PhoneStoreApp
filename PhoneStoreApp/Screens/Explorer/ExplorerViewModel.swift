@@ -12,10 +12,13 @@ class ExplorerViewModel: ObservableObject {
     
     private let networkManager = NetworkManager()
     
-    @Published var cartViewModel = CartViewModel()
+    @Published var cart: Cart?
     
     @Published var bestSellerItems: [Phone] = []
     @Published var hotSaleItems: [HotSale] = []
+    
+    @Published var filter: Filter
+    private var savedFilter: Filter?
     
     @Published var categories: [CategoryItem] = []
     private var currentCategory: Int = 1 {
@@ -23,8 +26,11 @@ class ExplorerViewModel: ObservableObject {
             markCategoryAsSelected()
         }
     }
+    
+    @Published var showFilters: Bool = false
 
     init() {
+        filter = Filter(brand: .samsung, priceRange: .medium, size: .low)
         categories = [
             CategoryItem(id: 1, icon: "iphone", title: "Phones"),
             CategoryItem(id: 2, icon: "desktopcomputer", title: "Computers"),
@@ -34,15 +40,23 @@ class ExplorerViewModel: ObservableObject {
             CategoryItem(id: 6, icon: "gamecontroller", title: "Games")
         ]
         markCategoryAsSelected()
+        saveFilter()
     }
     
     @MainActor func loadContent() async {
-        do {
-            let result = try await networkManager.fetchHomeStore()
-            bestSellerItems = result.bestSeller
-            hotSaleItems = result.homeStore
-        } catch {
-            print(error)
+        if bestSellerItems.isEmpty ||
+           hotSaleItems.isEmpty ||
+           cart == nil {
+            do {
+                let homeStore = try await networkManager.fetchHomeStore()
+                let cartInfo = try await networkManager.fetchCartInfo()
+                bestSellerItems = homeStore.bestSeller
+                hotSaleItems = homeStore.homeStore
+                cart = cartInfo
+                print("content downloaded")
+            } catch {
+                print(error)
+            }
         }
     }
     
@@ -54,6 +68,23 @@ class ExplorerViewModel: ObservableObject {
     
     func categorySelected(id: Int) {
         currentCategory = id
+    }
+    
+    func markLiked(item: Phone) {
+        for i in bestSellerItems.indices {
+            if bestSellerItems[i].id == item.id {
+                bestSellerItems[i].isFavorites.toggle()
+                break
+            }
+        }
+    }
+    
+    func saveFilter() {
+        savedFilter = filter
+    }
+    
+    func restoreFilter() {
+        filter = savedFilter!
     }
 }
 

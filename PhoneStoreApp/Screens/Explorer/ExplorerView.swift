@@ -15,37 +15,64 @@ struct ExplorerView: View {
         GeometryReader { geometry in
             
             let frame = geometry.frame(in: .global)
-            let categoriesHeight = frame.height * 0.1
-            let hotSalesHeight = frame.height * 0.25
-            let bestSellerCellHeight = frame.height * 0.4
+            let categoryCircleFrame = frame.width * 0.18
+            let hotSalesHeight = frame.width * 0.45
+            let bestSellerCellHeight = frame.width * 0.6
             
             NavigationView {
-                ScrollView {
-                    VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.wholeBlock) {
-                        BlockLabel(title: "Select category",
-                                   extendButton: "view all") {
-                            print("View all categories")
+                ZStack(alignment: .bottom) {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.wholeBlock) {
+                            BlockLabel(title: "Select category",
+                                       extendButton: "view all") {
+                                print("View all categories")
+                            }
+                            setupCategories(height: categoryCircleFrame)
+                            //
+                            BlockLabel(title: "Hot sales",
+                                       extendButton: "see all") {
+                                print("See all sales")
+                            }
+                            setupHotSaleCarousel(height: hotSalesHeight)
+                            //
+                            BlockLabel(title: "Best seller",
+                                       extendButton: "see more") {
+                                print("See more best sellers")
+                            }
+                            setupBestSellerGrid(cellHeight: bestSellerCellHeight)
                         }
-                        setupCategories(data: viewModel.categories, height: categoriesHeight)
-                        //
-                        BlockLabel(title: "Hot sales",
-                                   extendButton: "see all") {
-                            print("See all sales")
-                        }
-                        setupHotSaleCarousel(height: hotSalesHeight, width: frame.width)
-                        //
-                        BlockLabel(title: "Best seller",
-                                   extendButton: "see more") {
-                            print("See more best sellers")
-                        }
-                        setupBestSellerGrid(data: viewModel.bestSellerItems, cellHeight: bestSellerCellHeight)
-                        //
-                        Spacer()
                     }
-                    .edgesIgnoringSafeArea(.bottom)
+                    if viewModel.showFilters {
+                        FiltersView(filter: $viewModel.filter) {
+                            viewModel.restoreFilter()
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
+                        } actionDone: {
+                            viewModel.saveFilter()
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
+                        }
+                            .transition(AnyTransition.move(edge: .bottom))
+                            .zIndex(1)
+                    }
+                        
                 }
+                .edgesIgnoringSafeArea(.bottom)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        Button {
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
+                        } label: {
+                            Image(systemName: "slider.horizontal.3")
+                                .imageScale(.large)
+                                .foregroundColor(Color(K.Colors.darkBlue))
+                        }
+                    }
                     ToolbarItem(placement: .principal) {
                         Label {
                             Text("Hellomoto")
@@ -55,21 +82,14 @@ struct ExplorerView: View {
                                 .foregroundColor(Color(K.Colors.orange))
                         }
                         .labelStyle(.titleAndIcon)
-                        
                     }
                     ToolbarItem(placement: .navigationBarTrailing) {
-                        Button {
-                            print("Filter pressed")
-                        } label: {
-                            Image(systemName: "slider.horizontal.3")
-                                .imageScale(.large)
-                                .foregroundColor(Color(K.Colors.darkBlue))
-                        }
+                        NavBarCartButton(setBackground: false, cart: $viewModel.cart)
                     }
+                    
                 }
                 .task {
                     await viewModel.loadContent()
-                    await viewModel.cartViewModel.loadCartInfo()
                 }
             }
             .navigationViewStyle(.stack)
@@ -85,35 +105,40 @@ struct ExplorerView: View {
 
 extension ExplorerView {
     
-    @ViewBuilder func setupCategories(data: [CategoryItem], height: CGFloat) -> some View {
-        CategoryScrollView(data: data) { category in
+    @ViewBuilder func setupCategories(height: CGFloat) -> some View {
+        CategoryScrollView(data: viewModel.categories) { category in
             CategoryScrollItem(item: category, height: height) { id in
                 viewModel.categorySelected(id: id)
             }
         }
     }
     
-    @ViewBuilder func setupHotSaleCarousel(height: CGFloat, width: CGFloat) -> some View {
+    @ViewBuilder func setupHotSaleCarousel(height: CGFloat) -> some View {
         if viewModel.hotSaleItems.isEmpty {
             ProgressView()
                 .progressViewStyle(.circular)
-                .frame(width: width, height: height, alignment: .center)
+                .frame(height: height)
+                .frame(maxWidth: .infinity, alignment: .center)
         } else {
             HotSaleSlider(items: viewModel.hotSaleItems) { item in
-                HotSaleItem(cartViewModel: $viewModel.cartViewModel, item: item, height: height, width: width)
+                HotSaleItem(item: item, height: height, cart: $viewModel.cart)
             }
-            .frame(width: width, height: height)
+            .frame(height: height)
         }
     }
     
-    @ViewBuilder func setupBestSellerGrid(data: [Phone], cellHeight: CGFloat) -> some View {
+    @ViewBuilder func setupBestSellerGrid(cellHeight: CGFloat) -> some View {
         if viewModel.bestSellerItems.isEmpty {
             ProgressView()
                 .progressViewStyle(.circular)
-                .frame(maxWidth: .infinity, minHeight: cellHeight, maxHeight: .infinity, alignment: .center)
+                .frame(height: cellHeight)
+                .frame(maxWidth: .infinity, alignment: .center)
         } else {
-            GridView(data: data) { phone in
-                GridCell(cartViewModel: $viewModel.cartViewModel, item: phone, height: cellHeight)
+            GridView(data: viewModel.bestSellerItems) { phone in
+                GridCell(item: phone,
+                         height: cellHeight,
+                         cart: $viewModel.cart,
+                         action: { item in  viewModel.markLiked(item: item)})
             }
         }
     }

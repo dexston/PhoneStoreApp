@@ -11,7 +11,9 @@ struct CartView: View {
     
     @Environment(\.dismiss) private var dismiss
     
-    @StateObject var viewModel: CartViewModel
+    @Binding var data: Cart?
+    
+    @StateObject var viewModel = CartViewModel()
     
     var body: some View {
         GeometryReader { geometry in
@@ -20,15 +22,15 @@ struct CartView: View {
                 CartTitle()
                     .frame(maxWidth: .infinity, alignment: .leading)
                 VStack {
-                    CartContentScrollView(data: viewModel.basket) { item in
+                    CartContentScrollView(data: data?.basket ?? []) { item in
                         CartContentScrollItem(item: item, imageFrame: imageFrame) { type in
-                            viewModel.quantityOperation(type: type, item: item)
+                            viewModel.quantityOperation(type: type, item: item, cart: &data)
                         }
                     }
                     Divider()
                         .background(.white)
                         .padding(.horizontal, K.Paddings.CartView.CartCostInfo.devider)
-                    CartCostInfo(total: viewModel.totalCost, delivery: viewModel.deliveryCost)
+                    CartCostInfo(total: data?.totalCost ?? 0, delivery: data?.delivery ?? "")
                     Divider()
                         .background(.white)
                         .opacity(0.8)

@@ -9,10 +9,11 @@ import SwiftUI
 
 struct GridCell: View {
     
-    @Binding var cartViewModel: CartViewModel
-    
     var item: Phone
     var height: CGFloat
+    @Binding var cart: Cart?
+    
+    let action: (Phone) -> Void
     
     var posterHeight: CGFloat {
         height * 0.7
@@ -20,17 +21,14 @@ struct GridCell: View {
     var infoHeight: CGFloat {
         height * 0.3
     }
-    var likeButtonHeight: CGFloat {
-        height * 0.1
-    }
     
     var body: some View {
-        NavigationLink(destination: DetailedView(cartViewModel: $cartViewModel)) {
+        NavigationLink(destination: DetailedView(cart: $cart)) {
             VStack(alignment: .leading, spacing: .zero) {
                 ZStack {
                     PosterImage(url: item.picture, height: posterHeight)
-                    LikeButton(item: item, height: likeButtonHeight) {
-                        print("Like pressed")
+                    LikeButton(item: item) {
+                        action(item)
                     }
                 }
                 VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.GridCell.infoBlock) {
@@ -121,31 +119,24 @@ extension GridCell {
     struct LikeButton: View {
         
         let item: Phone
-        let height: CGFloat
-        let action: () -> ()
-        
-        var iconFrame: CGFloat {
-            height * 0.5
-        }
+        let action: () -> Void
         
         var body: some View {
-            Button {
-                action()
-            } label: {
-                ZStack {
-                    Circle()
-                        .fill(.white)
-                        .frame(width: height, height: height)
-                        .shadow(color: .secondary.opacity(0.3), radius: 5)
+            ZStack {
+                Button {
+                    action()
+                } label: {
                     Image(systemName: item.isFavorites ? "heart.fill" : "heart")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: iconFrame, height: iconFrame)
+                        .imageScale(.small)
                         .foregroundColor(Color(K.Colors.orange))
+                        .padding(K.Paddings.ExplorerView.gridCellLikeButton)
+                        .background(Circle()
+                                        .fill(.white)
+                                        .shadow(color: .secondary.opacity(0.3), radius: 5))
                 }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
             .padding([.top, .trailing], K.Paddings.ExplorerView.gridCellLikeButton)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topTrailing)
         }
     }
 }

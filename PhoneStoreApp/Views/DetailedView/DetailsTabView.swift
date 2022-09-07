@@ -9,7 +9,7 @@ import SwiftUI
 
 struct DetailsTabView: View {
     
-    @State var tabSelector: DetailsTabType = .shop
+    @State private var tabSelector: DetailsTabType = .shop
     
     let data: PhoneDetails
     

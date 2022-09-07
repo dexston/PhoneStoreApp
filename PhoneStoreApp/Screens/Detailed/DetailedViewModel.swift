@@ -16,11 +16,13 @@ class DetailedViewModel: ObservableObject {
     @Published var selectedCapacity: String = ""
     
     @MainActor func loadPhoneDetails() async {
-        do {
-            let details = try await networkManager.fetchPhoneDetails()
-            phoneDetails = details
-        } catch {
-            print(error)
+        if phoneDetails == nil {
+            do {
+                let details = try await networkManager.fetchPhoneDetails()
+                phoneDetails = details
+            } catch {
+                print(error)
+            }
         }
     }
 }

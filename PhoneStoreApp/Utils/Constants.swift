@@ -17,10 +17,6 @@ struct K {
     
     enum CornerRadius {
         static let navBarButton: CGFloat = 10
-        enum HotSaleItem {
-            static let backdropImage: CGFloat = 15
-            static let buyButton: CGFloat = 8
-        }
         enum DetailedView {
             static let imageBlock: CGFloat = 20
             static let infoBlock: CGFloat = 30
@@ -31,7 +27,11 @@ struct K {
         }
         enum ExplorerView {
             static let gridCell: CGFloat = 15
-            static let cornerRadius: CGFloat = 15
+            static let filter: CGFloat = 30
+            enum HotSaleItem {
+                static let backdropImage: CGFloat = 15
+                static let buyButton: CGFloat = 8
+            }
         }
         enum CartView {
             static let cartContentScrollItem: CGFloat = 10
@@ -42,17 +42,22 @@ struct K {
     
     enum Paddings {
         static let navBarButton: CGFloat = 10
-        enum HotSaleItem {
-            static let wholeBlock: CGFloat = 10
-            static let content: CGFloat = 20
-            static let buyButtonText: CGFloat = 5
-        }
         enum ExplorerView {
             static let grid: CGFloat = 10
             static let blockTitle: CGFloat = 15
             static let categoryItem: CGFloat = 10
             static let categoriesBlock: CGFloat = 20
-            static let gridCellLikeButton: CGFloat = 10
+            static let gridCellLikeButton: CGFloat = 7
+            static let filterElements: CGFloat = 30
+            static let filterDoneButton: CGFloat = 20
+            static let filterPicker: CGFloat = 10
+            enum HotSaleItem {
+                static let wholeBlock: CGFloat = 10
+                static let content: CGFloat = 20
+                static let buyButtonTextHorizontal: CGFloat = 25
+                static let buyButtonTextVertical: CGFloat = 5
+                static let newIcon: CGFloat = 10
+            }
         }
         enum DetailedView {
             static let infoBlock: CGFloat = 20
@@ -88,6 +93,7 @@ struct K {
         enum ExplorerView {
             static let wholeBlock: CGFloat = 10
             static let categoryItem: CGFloat = 20
+            static let filterPicker: CGFloat = 5
             enum GridCell {
                 static let infoBlock: CGFloat = 5
                 static let content: CGFloat = 10

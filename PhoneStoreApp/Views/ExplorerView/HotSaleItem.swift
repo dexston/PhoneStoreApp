@@ -9,39 +9,32 @@ import SwiftUI
 
 struct HotSaleItem: View {
     
-    @Binding var cartViewModel: CartViewModel
-    
     let item: HotSale
     let height: CGFloat
-    let width: CGFloat
-    
-    var newIconHeight: CGFloat {
-        height * 0.18
-    }
-    var buyButtonWidth: CGFloat {
-        width * 0.3
-    }
+    @Binding var cart: Cart?
     
     var body: some View {
-        NavigationLink(destination: DetailedView(cartViewModel: $cartViewModel)) {
-            ZStack {
-                BackdropImage(url: item.picture, height: height)
+        NavigationLink(destination: DetailedView(cart: $cart)) {
+            VStack(alignment: .leading) {
+                if item.isNew == true {
+                    NewIcon()
+                }
                 VStack(alignment: .leading) {
-                    if item.isNew == true {
-                        NewIcon(height: newIconHeight)
-                    }
                     Title(value: item.title)
                     Subtitle(value: item.subtitle)
-                    BuyButton(width: buyButtonWidth) {
-                        print("Buy button pressed")
-                    }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .padding(.leading, K.Paddings.HotSaleItem.content)
+                .frame(maxHeight: .infinity)
+                BuyButton() {
+                    print("Buy button pressed")
+                }
             }
-            .cornerRadius(K.CornerRadius.HotSaleItem.backdropImage)
-            .padding(.horizontal, K.Paddings.HotSaleItem.wholeBlock)
+            .padding(K.Paddings.ExplorerView.HotSaleItem.content)
+            .frame(height: height)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(BackdropImage(url: item.picture))
+            .cornerRadius(K.CornerRadius.ExplorerView.HotSaleItem.backdropImage)
         }
+        .padding(.horizontal, K.Paddings.ExplorerView.HotSaleItem.wholeBlock)
     }
 }
 
@@ -62,7 +55,7 @@ extension HotSaleItem {
                 .font(.title)
                 .fontWeight(.bold)
                 .lineLimit(2)
-                .minimumScaleFactor(0.5)
+                .minimumScaleFactor(0.8)
                 .multilineTextAlignment(.leading)
                 .foregroundColor(.white)
         }
@@ -83,31 +76,20 @@ extension HotSaleItem {
     
     struct NewIcon: View {
         
-        let height: CGFloat
-        
-        var textWidth: CGFloat {
-            height * 0.8
-        }
-        
         var body: some View {
-            ZStack {
-                Circle()
-                    .fill(Color(K.Colors.orange))
-                    .frame(width: height, height: height)
-                Text("New")
-                    .font(.caption)
-                    .fontWeight(.heavy)
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.1)
-                    .frame(width: textWidth)
-                    .foregroundColor(.white)
-            }
+            
+            Text("New")
+                .font(.caption)
+                .fontWeight(.heavy)
+                .foregroundColor(.white)
+                .minimumScaleFactor(0.5)
+                .padding(K.Paddings.ExplorerView.HotSaleItem.newIcon)
+                .background(Circle().fill(Color(K.Colors.orange)))
         }
     }
     
     struct BuyButton: View {
         
-        let width: CGFloat
         let action: () -> ()
         
         var body: some View {
@@ -117,19 +99,18 @@ extension HotSaleItem {
                 Text("Buy now!")
                     .font(.footnote)
                     .fontWeight(.bold)
-                    .padding(.vertical, K.Paddings.HotSaleItem.buyButtonText)
+                    .foregroundColor(Color(K.Colors.darkBlue))
+                    .padding(.vertical, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextVertical)
+                    .padding(.horizontal, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextHorizontal)
+                    .background(.white)
+                    .cornerRadius(K.CornerRadius.ExplorerView.HotSaleItem.buyButton)
             }
-            .frame(width: width)
-            .background(.white)
-            .foregroundColor(Color(K.Colors.darkBlue))
-            .cornerRadius(K.CornerRadius.HotSaleItem.buyButton)
         }
     }
     
     struct BackdropImage: View {
         
         let url: URL?
-        let height: CGFloat
         
         var body: some View {
             AsyncImage(url: url) { image in
@@ -140,8 +121,6 @@ extension HotSaleItem {
                 ProgressView()
                     .progressViewStyle(.circular)
             }
-            .frame(minWidth: .zero, maxWidth: .infinity)
-            .frame(height: height)
         }
     }
 }

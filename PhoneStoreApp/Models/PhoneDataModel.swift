@@ -10,7 +10,7 @@ import Foundation
 struct Phone: Decodable {
     
     let id: Int
-    let isFavorites: Bool
+    var isFavorites: Bool
     let title: String
     let priceWithoutDiscount: Int
     let discountPrice: Int
@@ -27,7 +27,7 @@ struct PhoneDetails: Decodable {
     let capacity: [String]
     let color: [String]
     let images: [URL]
-    let isFavorites: Bool
+    var isFavorites: Bool
     let price: Int
     let rating: Double
     let sd: String
