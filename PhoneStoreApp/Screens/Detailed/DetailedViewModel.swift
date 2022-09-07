@@ -25,4 +25,10 @@ class DetailedViewModel: ObservableObject {
             }
         }
     }
+    
+    func likeToggle() {
+        if phoneDetails != nil {
+            phoneDetails!.isFavorites.toggle()
+        }
+    }
 }
