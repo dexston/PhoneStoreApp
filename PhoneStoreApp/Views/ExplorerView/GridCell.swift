@@ -127,7 +127,7 @@ extension GridCell {
                     action()
                 } label: {
                     Image(systemName: item.isFavorites ? "heart.fill" : "heart")
-                        .imageScale(.medium)
+                        .imageScale(.small)
                         .foregroundColor(Color(K.Colors.orange))
                         .padding(K.Paddings.ExplorerView.gridCellLikeButton)
                         .background(Circle()

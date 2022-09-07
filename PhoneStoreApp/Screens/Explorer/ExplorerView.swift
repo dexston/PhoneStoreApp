@@ -20,7 +20,7 @@ struct ExplorerView: View {
             let bestSellerCellHeight = frame.width * 0.6
             
             NavigationView {
-                ZStack {
+                ZStack(alignment: .bottom) {
                     ScrollView {
                         VStack(alignment: .leading, spacing: K.Spacings.ExplorerView.wholeBlock) {
                             BlockLabel(title: "Select category",
@@ -42,14 +42,31 @@ struct ExplorerView: View {
                             setupBestSellerGrid(cellHeight: bestSellerCellHeight)
                         }
                     }
-                    //FiltersView(filter: viewModel.filter)
+                    if viewModel.showFilters {
+                        FiltersView(filter: $viewModel.filter) {
+                            viewModel.restoreFilter()
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
+                        } actionDone: {
+                            viewModel.saveFilter()
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
+                        }
+                            .transition(AnyTransition.move(edge: .bottom))
+                            .zIndex(1)
+                    }
+                        
                 }
                 .edgesIgnoringSafeArea(.bottom)
                 .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button {
-                            print("Filters")
+                            withAnimation {
+                                viewModel.showFilters.toggle()
+                            }
                         } label: {
                             Image(systemName: "slider.horizontal.3")
                                 .imageScale(.large)

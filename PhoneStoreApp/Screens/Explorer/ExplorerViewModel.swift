@@ -18,6 +18,8 @@ class ExplorerViewModel: ObservableObject {
     @Published var hotSaleItems: [HotSale] = []
     
     @Published var filter: Filter
+    private var savedFilter: Filter?
+    
     @Published var categories: [CategoryItem] = []
     private var currentCategory: Int = 1 {
         didSet {
@@ -25,6 +27,7 @@ class ExplorerViewModel: ObservableObject {
         }
     }
     
+    @Published var showFilters: Bool = false
 
     init() {
         filter = Filter(brand: .samsung, priceRange: .medium, size: .low)
@@ -37,6 +40,7 @@ class ExplorerViewModel: ObservableObject {
             CategoryItem(id: 6, icon: "gamecontroller", title: "Games")
         ]
         markCategoryAsSelected()
+        saveFilter()
     }
     
     @MainActor func loadContent() async {
@@ -73,6 +77,14 @@ class ExplorerViewModel: ObservableObject {
                 break
             }
         }
+    }
+    
+    func saveFilter() {
+        savedFilter = filter
+    }
+    
+    func restoreFilter() {
+        filter = savedFilter!
     }
 }
 

@@ -14,7 +14,10 @@ struct Filter {
     var size: SizeRange
     
     enum Brand: String, CaseIterable {
-        case samsung, apple, huawei, xiaomi
+        case samsung = "Samsung"
+        case apple = "Apple"
+        case huawei = "Huawei"
+        case xiaomi = "Xiaomi"
     }
     enum PriceRange: String, CaseIterable {
         case low = "$0 - $300"

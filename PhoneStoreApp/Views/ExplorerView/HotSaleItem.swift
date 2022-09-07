@@ -32,7 +32,7 @@ struct HotSaleItem: View {
             .frame(height: height)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(BackdropImage(url: item.picture))
-            .cornerRadius(K.CornerRadius.HotSaleItem.backdropImage)
+            .cornerRadius(K.CornerRadius.ExplorerView.HotSaleItem.backdropImage)
         }
         .padding(.horizontal, K.Paddings.ExplorerView.HotSaleItem.wholeBlock)
     }
@@ -100,10 +100,10 @@ extension HotSaleItem {
                     .font(.footnote)
                     .fontWeight(.bold)
                     .foregroundColor(Color(K.Colors.darkBlue))
-                    .padding(.vertical, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextHorizontal)
-                    .padding(.horizontal, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextVertical)
+                    .padding(.vertical, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextVertical)
+                    .padding(.horizontal, K.Paddings.ExplorerView.HotSaleItem.buyButtonTextHorizontal)
                     .background(.white)
-                    .cornerRadius(K.CornerRadius.HotSaleItem.buyButton)
+                    .cornerRadius(K.CornerRadius.ExplorerView.HotSaleItem.buyButton)
             }
         }
     }
