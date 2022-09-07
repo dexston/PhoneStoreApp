@@ -12,6 +12,7 @@ struct DetailsTabView: View {
     @State private var tabSelector: DetailsTabType = .shop
     
     let data: PhoneDetails
+    let height: CGFloat
     
     var body: some View {
         VStack {
@@ -30,6 +31,7 @@ struct DetailsTabView: View {
             }
             .tabViewStyle(.page(indexDisplayMode: .never))
         }
+        .frame(minHeight: height)
     }
 }
 
@@ -78,11 +80,15 @@ extension DetailsTabView {
         let data: PhoneDetails
         
         var body: some View {
-            HStack(alignment: .bottom, spacing: .zero) {
-                SpecItem(icon: "cpu", text: data.CPU)
-                SpecItem(icon: "camera", text: data.camera)
-                SpecItem(icon: "memorychip", text: data.ssd)
-                SpecItem(icon: "sdcard", text: data.sd)
+            GeometryReader { proxy in
+                let height = proxy.frame(in: .local).height * 0.3
+                HStack(alignment: .bottom, spacing: .zero) {
+                    SpecItem(icon: "cpu", text: data.CPU, height: height)
+                    SpecItem(icon: "camera", text: data.camera, height: height)
+                    SpecItem(icon: "memorychip", text: data.ssd, height: height)
+                    SpecItem(icon: "sdcard", text: data.sd, height: height)
+                }
+                .frame(maxHeight: .infinity)
             }
         }
         
@@ -90,6 +96,7 @@ extension DetailsTabView {
             
             let icon: String
             let text: String
+            let height: CGFloat
             
             var body: some View {
                 VStack {
@@ -97,13 +104,15 @@ extension DetailsTabView {
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(.secondary)
+                        .frame(maxWidth: height, maxHeight: height)
                     Text(text)
                         .font(.footnote)
                         .fontWeight(.light)
                         .lineLimit(2)
+                        .minimumScaleFactor(0.8)
                         .foregroundColor(.secondary)
                 }
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .bottom)
             }
         }
     }

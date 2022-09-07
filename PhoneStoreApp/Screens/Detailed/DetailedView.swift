@@ -21,7 +21,7 @@ struct DetailedView: View {
             VStack(spacing: .zero) {
                 ImageCarousel(data: viewModel.phoneDetails)
                     .frame(maxHeight: frame.height * 0.45)
-                setupDetails()
+                setupDetails(specsHeight: frame.width * 0.4)
             }
             .edgesIgnoringSafeArea(.bottom)
             .shadow(color: .secondary.opacity(0.4), radius: 10)
@@ -53,32 +53,34 @@ struct DetailedView: View {
 
 extension DetailedView {
     
-    @ViewBuilder func setupDetails() -> some View {
+    @ViewBuilder func setupDetails(specsHeight: CGFloat) -> some View {
         if let phoneDetails = viewModel.phoneDetails {
             VStack {
-                HStack {
-                    DeviceTitle(title: phoneDetails.title)
-                    Spacer()
-                    LikeButton(isLiked: phoneDetails.isFavorites) {
-                        print("Like pressed")
+                ScrollView(showsIndicators: false) {
+                    HStack {
+                        DeviceTitle(title: phoneDetails.title)
+                        Spacer()
+                        LikeButton(isLiked: phoneDetails.isFavorites) {
+                            viewModel.likeToggle()
+                        }
                     }
+                    StarsRating(value: phoneDetails.rating)
+                    DetailsTabView(data: phoneDetails, height: specsHeight)
+                    SelectionTitle()
+                    HStack {
+                        SelectionScrollView(data: phoneDetails.color) { color in
+                            ColorScrollItem(item: color,
+                                            selectedColor: viewModel.selectedColor,
+                                            action: { color in viewModel.selectedColor = color })
+                        }
+                        SelectionScrollView(data: phoneDetails.capacity) { capacity in
+                            CapacityScrollItem(value: capacity,
+                                               selectedCapacity: viewModel.selectedCapacity,
+                                               action: { capacity in viewModel.selectedCapacity = capacity })
+                        }
+                    }
+                    AddToCartButton(price: phoneDetails.price)
                 }
-                StarsRating(value: phoneDetails.rating)
-                DetailsTabView(data: phoneDetails)
-                SelectionTitle()
-                HStack {
-                    SelectionScrollView(data: phoneDetails.color) { color in
-                        ColorScrollItem(item: color,
-                                        selectedColor: viewModel.selectedColor,
-                                        action: { color in viewModel.selectedColor = color })
-                    }
-                    SelectionScrollView(data: phoneDetails.capacity) { capacity in
-                        CapacityScrollItem(value: capacity,
-                                           selectedCapacity: viewModel.selectedCapacity,
-                                           action: { capacity in viewModel.selectedCapacity = capacity })
-                    }
-                }
-                AddToCartButton(price: phoneDetails.price)
             }
             .padding(K.Paddings.DetailedView.infoBlock)
             .background(.white)
